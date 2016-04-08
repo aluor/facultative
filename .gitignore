@@ -1,14 +1,13 @@
+
 #Eclipse
-bin/
-.settings/
+**/bin/
+.settings
 .classpath
 .project
 
 #IDEA
-.idea/
+/.idea
 *.iml
-*.iws
-out/
-build/
-log/
-target/
+**/out
+**/build
+**/target
