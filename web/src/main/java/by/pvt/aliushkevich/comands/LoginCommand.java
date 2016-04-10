@@ -1,7 +1,7 @@
 package by.pvt.aliushkevich.comands;
 
 import by.pvt.aliushkevich.constants.Const;
-import by.pvt.aliushkevich.dao.StudentDAO;
+import by.pvt.aliushkevich.daoServices.StudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.logic.LoginLogic;
 import org.apache.log4j.Logger;
@@ -15,7 +15,7 @@ public class LoginCommand implements ActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		logger.debug("LoginCommand used...");
-		StudentDAO studentDAO = new StudentDAO();
+		StudentService studentService = new StudentService();
 		String page = null;
 		// извлечение из запроса логина и пароля
 		String login = request.getParameter("login");
@@ -27,7 +27,7 @@ public class LoginCommand implements ActionCommand {
 		// проверка логина и пароля
 		if (LoginLogic.checkLecturerLogin(login, pass)) {
 			session.setAttribute("userType", ClientType.LECTURER);
-			request.setAttribute("students", studentDAO.getClients());
+			request.setAttribute("students", studentService.getStudents());
 			page = "/jsp/lecturer.jsp";
 		} else if (LoginLogic.checkStudentLogin(login, pass)) {
 			session.setAttribute("userType", ClientType.STUDENT);

@@ -12,7 +12,7 @@ public class LecturerService {
   private LecturerDAO dao;
 
   public LecturerService() {
-    LecturerDAO dao = new LecturerDAO();
+    dao = new LecturerDAO();
   }
 
   public void addLecturer(Lecturer lecturer) throws SQLException {

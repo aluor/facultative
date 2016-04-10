@@ -1,8 +1,7 @@
 package by.pvt.aliushkevich.comands;
 
-import by.pvt.aliushkevich.dao.LecturerDAO;
+import by.pvt.aliushkevich.daoServices.LecturerService;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class AddMarkFeedbackCommand implements ActionCommand {
@@ -33,9 +32,9 @@ public class AddMarkFeedbackCommand implements ActionCommand {
 			request.setAttribute("errorMessage", "Incorrect data or empty field \"feedback\"");
 			page = "/jsp/fail.jsp";
 		} else {
-			LecturerDAO lecturerDAO = new LecturerDAO();
-			lecturerDAO.addMarkFeedback(mark, feedback, studentId, courseId);
-			if (lecturerDAO.hasMarkFeedback(mark, feedback, studentId, courseId)) {
+			LecturerService lecturerService = new LecturerService();
+			lecturerService.addMarkFeedback(mark, feedback, studentId, courseId);
+			if (lecturerService.hasMarkFeedback(mark, feedback, studentId, courseId)) {
 				page = "/jsp/success.jsp";
 			} else {
 				request.setAttribute("errorMessage", "Incorrect data or empty field left");

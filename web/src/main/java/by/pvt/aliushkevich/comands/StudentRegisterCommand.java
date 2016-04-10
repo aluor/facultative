@@ -1,6 +1,6 @@
 package by.pvt.aliushkevich.comands;
 
-import by.pvt.aliushkevich.dao.StudentDAO;
+import by.pvt.aliushkevich.daoServices.StudentService;
 import by.pvt.aliushkevich.entity.Student;
 import by.pvt.aliushkevich.enums.ClientType;
 import org.apache.log4j.Logger;
@@ -21,10 +21,10 @@ public class StudentRegisterCommand implements ActionCommand {
 		student.setFirstName(request.getParameter("firstName"));
 		student.setLastName(request.getParameter("lastName"));
 		student.setLogin(request.getParameter("login"));
-		student.setPassword(request.getParameter("password"));		
-		StudentDAO studentDAO = new StudentDAO();
+		student.setPassword(request.getParameter("password"));
+		StudentService studentService = new StudentService();
 		try {
-			studentDAO.addClient(student);
+			studentService.addStudent(student);
 		} catch (SQLException e) {
 			logger.debug("Incorrect input: Try to input another data");
 			request.setAttribute("errorMessage", "Incorrect input: Try to input another data");

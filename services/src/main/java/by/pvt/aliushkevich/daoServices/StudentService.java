@@ -13,7 +13,7 @@ public class StudentService {
   private StudentDAO dao;
 
   public StudentService() {
-    StudentDAO dao = new StudentDAO();
+    dao = new StudentDAO();
   }
 
   public void addStudent(Student student) throws SQLException {
