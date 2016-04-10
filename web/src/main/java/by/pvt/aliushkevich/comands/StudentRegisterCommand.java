@@ -24,7 +24,7 @@ public class StudentRegisterCommand implements ActionCommand {
 		student.setPassword(request.getParameter("password"));		
 		StudentDAO studentDAO = new StudentDAO();
 		try {
-			studentDAO.addStudent(student);
+			studentDAO.addClient(student);
 		} catch (SQLException e) {
 			logger.debug("Incorrect input: Try to input another data");
 			request.setAttribute("errorMessage", "Incorrect input: Try to input another data");

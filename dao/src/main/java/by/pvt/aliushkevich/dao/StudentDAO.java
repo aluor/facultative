@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class StudentDAO extends DAO {
+public class StudentDAO implements DAO<Student> {
 
   public static final String SQL_QUERY_ADD_STUDENT =
       "INSERT INTO students (first_name, last_name, login, password) VALUES (?,?,?,?)";
@@ -22,7 +22,7 @@ public class StudentDAO extends DAO {
   public static final String SQL_QUERY_ADD_LEARNING_COURSE =
       "INSERT INTO results (students_id, courses_id) VALUES (?,?)";
 
-  public void addStudent(Student student) throws SQLException {
+  public void addClient(Student student) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -94,7 +94,7 @@ public class StudentDAO extends DAO {
     }
   }
 
-  public ArrayList<Student> getStudents() {
+  public ArrayList<Student> getClients() {
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;

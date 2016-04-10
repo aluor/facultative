@@ -1,6 +1,9 @@
 package by.pvt.aliushkevich.dao;
 
-public abstract class DAO {
-	protected DAO() {
-	}
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public interface DAO<T> {
+	void addClient(T client) throws SQLException;
+	ArrayList<T> getClients();
 }

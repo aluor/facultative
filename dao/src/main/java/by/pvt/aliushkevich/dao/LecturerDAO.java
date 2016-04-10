@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class LecturerDAO extends DAO {
+public class LecturerDAO implements DAO<Lecturer> {
 
   public static final String SQL_QUERY_ADD_LECTURER =
       "INSERT INTO lectures (first_name, last_name, login, password) VALUES (?,?,?,?)";
@@ -22,7 +22,7 @@ public class LecturerDAO extends DAO {
   public static final String SQL_QUERY_GET_MARK_FEEDBACK =
       "SELECT students_id FROM results WHERE students_id = ? and courses_id = ? and mark = ? and feedback = ?";
 
-  public void addLecturer(Lecturer lecturer) {
+  public void addClient(Lecturer lecturer) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -78,7 +78,7 @@ public class LecturerDAO extends DAO {
     }
   }
 
-  public ArrayList<Lecturer> getLecturers() {
+  public ArrayList<Lecturer> getClients() {
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;

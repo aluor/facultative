@@ -14,7 +14,7 @@ public class LoginLogic {
 	public static boolean checkLecturerLogin(String enterLogin, String enterPass) {
 		boolean check = false;		
 		LecturerDAO lecturerDAO = new LecturerDAO();
-		ArrayList<Lecturer> lecturers = lecturerDAO.getLecturers();
+		ArrayList<Lecturer> lecturers = lecturerDAO.getClients();
 		for (Lecturer lecturer : lecturers) {
 			if (lecturer.getLogin().equals(enterLogin) && lecturer.getPassword().equals(enterPass)) {
 				check = true;
@@ -28,7 +28,7 @@ public class LoginLogic {
 	public static boolean checkStudentLogin(String enterLogin, String enterPass) {
 		boolean check = false;		
 		StudentDAO studentDAO = new StudentDAO();
-		ArrayList<Student> students = studentDAO.getStudents();
+		ArrayList<Student> students = studentDAO.getClients();
 		for (Student student : students) {
 			if (student.getLogin().equals(enterLogin) && student.getPassword().equals(enterPass)) {
 				check = true;

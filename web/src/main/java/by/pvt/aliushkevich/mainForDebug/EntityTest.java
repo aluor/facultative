@@ -29,12 +29,12 @@ public class EntityTest {
 		//lecturerDAO.addLecturer(lecturer1);
 		//lecturerDAO.addMarkFeedback(4, "GOOD student", 2, 3);
 		
-		ArrayList<Student> students = studentDAO.getStudents();
+		ArrayList<Student> students = studentDAO.getClients();
 		for (Student student : students) {
 			System.out.println(student + "\n");
 		}
 		
-		ArrayList<Lecturer> lecturers = lecturerDAO.getLecturers();
+		ArrayList<Lecturer> lecturers = lecturerDAO.getClients();
 		for (Lecturer lecturer : lecturers) {
 			System.out.println(lecturer + "\n");
 		}		

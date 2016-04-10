@@ -27,7 +27,7 @@ public class LoginCommand implements ActionCommand {
 		// проверка логина и пароля
 		if (LoginLogic.checkLecturerLogin(login, pass)) {
 			session.setAttribute("userType", ClientType.LECTURER);
-			request.setAttribute("students", studentDAO.getStudents());						
+			request.setAttribute("students", studentDAO.getClients());
 			page = "/jsp/lecturer.jsp";
 		} else if (LoginLogic.checkStudentLogin(login, pass)) {
 			session.setAttribute("userType", ClientType.STUDENT);
