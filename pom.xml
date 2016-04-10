@@ -56,6 +56,27 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+        <configuration>
+          <url>http://localhost:8080/manager/text</url>
+          <username>admin</username>
+          <password>admin</password>
+          <path>/${project.build.finalName}</path>
+          <warfile>target/${project.build.finalName}</warfile>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>redeploy</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 
