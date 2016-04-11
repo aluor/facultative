@@ -17,6 +17,7 @@ public class LecturerDAO implements DAO<Lecturer> {
       "SELECT lectures.id, lectures.first_name, lectures.last_name, " +
           "lectures.login, lectures.password, courses.course " +
           "FROM lectures LEFT JOIN courses ON lectures.id = courses.lectures_id";
+  public static final String SQL_QUERY_DELETE_LECTURER = "DELETE FROM lectures WHERE login = ?";
   public static final String SQL_QUERY_ADD_MARK_FEEDBACK =
       "UPDATE results SET mark = ?, feedback = ?  WHERE students_id = ? and courses_id = ?";
   public static final String SQL_QUERY_GET_MARK_FEEDBACK =
@@ -35,6 +36,31 @@ public class LecturerDAO implements DAO<Lecturer> {
       preparedStatement.executeUpdate();
     } catch (SQLException | IOException | PropertyVetoException e) {
       System.out.println("SQL, IOE or PropertyVetoException occurred during adding lecturer");
+      e.printStackTrace();
+    } finally {
+      if (preparedStatement != null) try {
+        preparedStatement.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      if (connection != null) try {
+        connection.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void deleteLecturer(Lecturer lecturer) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = DataSource.getInstance().getConnection();
+      preparedStatement = connection.prepareStatement(SQL_QUERY_DELETE_LECTURER);
+      preparedStatement.setString(1, lecturer.getLogin());
+      preparedStatement.executeUpdate();
+    } catch (SQLException | IOException | PropertyVetoException e) {
+      System.out.println("SQL, IOE or PropertyVetoException occurred during deleting lecturer");
       e.printStackTrace();
     } finally {
       if (preparedStatement != null) try {
