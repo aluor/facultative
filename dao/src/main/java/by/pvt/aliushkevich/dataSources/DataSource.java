@@ -10,6 +10,7 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class DataSource {
 
@@ -17,11 +18,12 @@ public class DataSource {
   private ComboPooledDataSource cpds;
 
   private DataSource() throws IOException, SQLException, PropertyVetoException {
+    ResourceBundle bundle = ResourceBundle.getBundle("db");
     cpds = new ComboPooledDataSource();
-    cpds.setDriverClass("com.mysql.jdbc.Driver"); //loads the jdbc driver
-    cpds.setJdbcUrl("jdbc:mysql://localhost:3306/facultative");
-    cpds.setUser("root");
-    cpds.setPassword("root");
+    cpds.setDriverClass(bundle.getString("SQL_DB_DRIVER_CLASS"));
+    cpds.setJdbcUrl(bundle.getString("SQL_DB_URL"));
+    cpds.setUser(bundle.getString("SQL_DB_USERNAME"));
+    cpds.setPassword(bundle.getString("SQL_DB_PASSWORD"));
     // the settings below are optional -- c3p0 can work with defaults
     cpds.setMinPoolSize(5);
     cpds.setAcquireIncrement(5);
