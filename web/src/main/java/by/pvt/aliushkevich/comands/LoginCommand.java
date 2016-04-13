@@ -15,7 +15,6 @@ public class LoginCommand implements ActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		logger.debug("LoginCommand used...");
-		StudentService studentService = new StudentService();
 		String page = null;
 		// извлечение из запроса логина и пароля
 		String login = request.getParameter("login");
@@ -27,7 +26,7 @@ public class LoginCommand implements ActionCommand {
 		// проверка логина и пароля
 		if (LoginLogic.checkLecturerLogin(login, pass)) {
 			session.setAttribute("userType", ClientType.LECTURER);
-			request.setAttribute("students", studentService.getStudents());
+			request.setAttribute("students", StudentService.getInstance().getStudents());
 			page = "/jsp/lecturer.jsp";
 		} else if (LoginLogic.checkStudentLogin(login, pass)) {
 			session.setAttribute("userType", ClientType.STUDENT);

@@ -10,9 +10,19 @@ import java.util.ArrayList;
  */
 public class LecturerService {
   private LecturerDAO dao;
+  private static LecturerService lecturerService;
 
-  public LecturerService() {
+  private LecturerService() {
     dao = new LecturerDAO();
+  }
+
+  public static LecturerService getInstance() {
+    if (lecturerService == null) {
+      lecturerService = new LecturerService();
+      return lecturerService;
+    } else {
+      return lecturerService;
+    }
   }
 
   public void addLecturer(Lecturer lecturer) throws SQLException {

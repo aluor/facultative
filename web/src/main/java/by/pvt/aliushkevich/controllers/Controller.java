@@ -76,5 +76,4 @@ public class Controller extends HttpServlet {
 			logger.error("controller could not found the page");
 		}
 	}
-
 }

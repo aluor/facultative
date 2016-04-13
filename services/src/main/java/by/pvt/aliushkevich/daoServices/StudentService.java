@@ -11,9 +11,19 @@ import java.util.ArrayList;
  */
 public class StudentService {
   private StudentDAO dao;
+  private static StudentService studentService;
 
-  public StudentService() {
+  private StudentService() {
     dao = new StudentDAO();
+  }
+
+  public static StudentService getInstance() {
+    if (studentService == null) {
+      studentService = new StudentService();
+      return studentService;
+    } else {
+      return studentService;
+    }
   }
 
   public void addStudent(Student student) throws SQLException {

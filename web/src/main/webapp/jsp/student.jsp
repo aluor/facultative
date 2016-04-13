@@ -15,7 +15,7 @@
 	 <form name="chooseCourseForm" method="POST" action="controller">
    <input type="hidden" name="command" value="chooseLearningCourse" />
    <p><b>Your choice:</b></p>
-    <p><input name="choise" type="radio" value="1"> Mathematics</p>
+    <p><input name="choise" type="radio" value="1" checked="checked"> Mathematics</p>
     <p><input name="choise" type="radio" value="2"> Physics</p>
     <p><input name="choise" type="radio" value="3"> English</p>
     <p><input type="submit" value="I understand, what I'm doing"></p>

@@ -17,9 +17,8 @@ public class AddLearningCourseCommand implements ActionCommand {
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("user");
 		int choice = Integer.parseInt(request.getParameter("choise"));
-		StudentService studentService = new StudentService();
 		try {
-			studentService.addLearningCourse(login, choice);
+			StudentService.getInstance().addLearningCourse(login, choice);
 		} catch (SQLException e) {
 			System.err.println("Incorrect input: You have already signed on that course");
 			request.setAttribute("errorMessage", "Incorrect input: You have already signed on that course");
