@@ -39,21 +39,6 @@ public class LecturerDAOTest {
     assertEquals("Add lecturer failed: password mismatch", testLecturer.getPassword(), expectedLecturer.getPassword());
   }
 
-  @Test
-  public void addMarkFeedback() throws Exception {
-
-  }
-
-  @Test
-  public void getClients() throws Exception {
-
-  }
-
-  @Test
-  public void hasMarkFeedback() throws Exception {
-
-  }
-
   @After
   public void tearDown() throws Exception {
     lecturerDAO.deleteLecturer(testLecturer);

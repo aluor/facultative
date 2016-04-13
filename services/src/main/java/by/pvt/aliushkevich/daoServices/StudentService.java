@@ -30,6 +30,10 @@ public class StudentService {
     dao.addClient(student);
   }
 
+  public void deleteStudent(Student student) throws SQLException {
+    dao.deleteStudent(student);
+  }
+
   public void addLearningCourse(String login, int courseId) throws SQLException {
     dao.addLearningCourse(login, courseId);
   }
