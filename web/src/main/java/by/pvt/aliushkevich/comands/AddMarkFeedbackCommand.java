@@ -1,7 +1,7 @@
 package by.pvt.aliushkevich.comands;
 
-import by.pvt.aliushkevich.daoServices.LecturerService;
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class AddMarkFeedbackCommand implements ActionCommand {
@@ -31,18 +31,20 @@ public class AddMarkFeedbackCommand implements ActionCommand {
 		 logger.debug("AddMarkFeedbackCommand recieved: mark= " + mark + " feedback= "
 		+ feedback + " studentId= " + studentId + " courseId= " + courseId);
 
-		if (feedback == "") {
-			request.setAttribute("errorMessage", "Incorrect data or empty field left");
-			page = "/jsp/fail.jsp";
-		} else {
-			LecturerService.getInstance().addMarkFeedback(mark, feedback, studentId, courseId);
-			if (LecturerService.getInstance().hasMarkFeedback(mark, feedback, studentId, courseId)) {
-				page = "/jsp/success.jsp";
-			} else {
-				request.setAttribute("errorMessage", "Incorrect data or empty field left");
-				page = "/jsp/fail.jsp";
-			}
-		}
+		//TODO
+//		if (feedback == "") {
+//			request.setAttribute("errorMessage", "Incorrect data or empty field left");
+//			page = "/jsp/fail.jsp";
+//		} else {
+//			LecturerService.getInstance().addMarkFeedback(mark, feedback, studentId, courseId);
+//			if (LecturerService.getInstance().hasMarkFeedback(mark, feedback, studentId, courseId)) {
+//				page = "/jsp/success.jsp";
+//			} else {
+//				request.setAttribute("errorMessage", "Incorrect data or empty field left");
+//				page = "/jsp/fail.jsp";
+//			}
+//		}
+
 		logger.debug("AddMarkFeedbackCommand returned: " +page);
 		return page;
 	}

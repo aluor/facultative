@@ -1,10 +1,9 @@
 package by.pvt.aliushkevich.comands;
 
-import by.pvt.aliushkevich.daoServices.StudentService;
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class AddLearningCourseCommand implements ActionCommand {
 	static Logger logger = Logger.getLogger(AddLearningCourseCommand.class.getName());
@@ -17,15 +16,17 @@ public class AddLearningCourseCommand implements ActionCommand {
 		HttpSession session = request.getSession();
 		String login = (String) session.getAttribute("user");
 		int choice = Integer.parseInt(request.getParameter("choise"));
-		try {
-			StudentService.getInstance().addLearningCourse(login, choice);
-		} catch (SQLException e) {
-			System.err.println("Incorrect input: You have already signed on that course");
-			request.setAttribute("errorMessage", "Incorrect input: You have already signed on that course");
-			page = "/jsp/fail.jsp";
-			logger.debug("AddLearningCourseCommand returned: " +page);
-			return page;
-		}		
+//		TODO
+//		try {
+//
+//			StudentService.getInstance().addLearningCourse(login, choice);
+//		} catch (SQLException e) {
+//			System.err.println("Incorrect input: You have already signed on that course");
+//			request.setAttribute("errorMessage", "Incorrect input: You have already signed on that course");
+//			page = "/jsp/fail.jsp";
+//			logger.debug("AddLearningCourseCommand returned: " +page);
+//			return page;
+//		}
 		page = "/jsp/success.jsp";
 		logger.debug("AddLearningCourseCommand returned: " +page);
 		return page;

@@ -1,19 +1,18 @@
 package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.LecturerDAO;
-import by.pvt.aliushkevich.entity.Lecturer;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import by.pvt.aliushkevich.exceptions.DaoException;
+import by.pvt.aliushkevich.pojos.Lecturer;
 
 /**
  * Created by Rabotnik on 10.04.2016.
  */
 public class LecturerService {
-  private LecturerDAO dao;
+  private LecturerDAO lecturerDAO;
   private static LecturerService lecturerService;
 
   private LecturerService() {
-    dao = new LecturerDAO();
+    lecturerDAO = new LecturerDAO();
   }
 
   public static LecturerService getInstance() {
@@ -25,20 +24,20 @@ public class LecturerService {
     }
   }
 
-  public void addLecturer(Lecturer lecturer) throws SQLException {
-    dao.addClient(lecturer);
+  public void addLecturer(Lecturer lecturer) throws DaoException {
+    lecturerDAO.saveOrUpdate(lecturer);
   }
-
-  public void addMarkFeedback(int mark, String feedback, int studentId, int courseId) {
-    dao.addMarkFeedback(mark, feedback, studentId, courseId);
-  }
-
-  public ArrayList<Lecturer> getLecturers() {
-    return dao.getClients();
-  }
-
-  public boolean hasMarkFeedback(int mark, String feedback, int studentId, int courseId) {
-    return dao.hasMarkFeedback(mark, feedback, studentId, courseId);
-  }
+//TODO
+//  public void addMarkFeedback(int mark, String feedback, int studentId, int courseId) {
+//    lecturerDAO.addMarkFeedback(mark, feedback, studentId, courseId);
+//  }
+//
+//  public ArrayList<Lecturer> getLecturers() {
+//    return lecturerDAO.getClients();
+//  }
+//
+//  public boolean hasMarkFeedback(int mark, String feedback, int studentId, int courseId) {
+//    return lecturerDAO.hasMarkFeedback(mark, feedback, studentId, courseId);
+//  }
 
 }

@@ -1,18 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
 
+  <modelVersion>4.0.0</modelVersion>
   <groupId>by.pvt.aliushkevich</groupId>
   <artifactId>facultative</artifactId>
   <version>1.0-SNAPSHOT</version>
+
   <modules>
     <module>dao</module>
     <module>services</module>
     <module>web</module>
   </modules>
-  <packaging>pom</packaging>
 
+  <packaging>pom</packaging>
   <name>facultative</name>
   <url>http://maven.apache.org</url>
 
@@ -21,6 +22,7 @@
     <jstl.version>1.2</jstl.version>
     <junit.version>4.12</junit.version>
     <log4j.version>1.2.17</log4j.version>
+    <slf4j-log4j12.version>1.5.6</slf4j-log4j12.version>
   </properties>
 
   <dependencies>
@@ -42,6 +44,12 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>${log4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j-log4j12.version}</version>
     </dependency>
 
   </dependencies>
@@ -96,6 +104,58 @@
             <goals>
               <goal>cobertura</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--<plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>by.pvt.aliushkevich.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <version>2.6</version>
+      </plugin>-->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>by.pvt.aliushkevich.Main</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
       </plugin>

@@ -1,13 +1,13 @@
 package by.pvt.aliushkevich.comands;
 
 import by.pvt.aliushkevich.daoServices.StudentService;
-import by.pvt.aliushkevich.entity.Student;
 import by.pvt.aliushkevich.enums.ClientType;
+import by.pvt.aliushkevich.exceptions.DaoException;
+import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class StudentRegisterCommand implements ActionCommand {
   static Logger logger = Logger.getLogger(StudentRegisterCommand.class.getName());
@@ -25,7 +25,7 @@ public class StudentRegisterCommand implements ActionCommand {
     if (request.getParameter("firstName") != "" && request.getParameter("lastName") != "" && request.getParameter("login") != "" && request.getParameter("password") != "") {
       try {
         StudentService.getInstance().addStudent(student);
-      } catch (SQLException e) {
+      } catch (DaoException e) {
         logger.debug("Incorrect input: Try to input another data");
         request.setAttribute("errorMessage", "Incorrect input: Try to input another data");
         page = "/jsp/fail.jsp";
