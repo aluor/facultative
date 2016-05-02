@@ -4,6 +4,8 @@ import by.pvt.aliushkevich.dao.StudentDAO;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Student;
 
+import java.util.List;
+
 /**
  * Created by Rabotnik on 10.04.2016.
  */
@@ -36,9 +38,9 @@ public class StudentService {
     studentDao.addLearningCourse(login, courseId);
   }
 
-//TODO
-//  public ArrayList<Student> getStudents() {
-//    return studentDao.getClients();
-//  }
+
+  public List<Student> getStudents() {
+    return studentDao.getStudents();
+  }
 
 }

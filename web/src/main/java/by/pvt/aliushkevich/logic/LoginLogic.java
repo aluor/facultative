@@ -6,7 +6,7 @@ public class LoginLogic {
 	static Logger logger = Logger.getLogger(LoginLogic.class.getName());
 
 	public static boolean checkLecturerLogin(String enterLogin, String enterPass) {
-		boolean check = false;
+		boolean check = true; //true - for debug only!!! (false needed)
 //		TODO
 //		ArrayList<Lecturer> lecturers = LecturerService.getInstance().getLecturers();
 //		for (Lecturer lecturer : lecturers) {
@@ -20,7 +20,7 @@ public class LoginLogic {
 	}
 
 	public static boolean checkStudentLogin(String enterLogin, String enterPass) {
-		boolean check = true; //true - for debug only!!! (false needed)
+		boolean check = false; //true - for debug only!!! (false needed)
 //    TODO
 //		ArrayList<Student> students = StudentService.getInstance().getStudents();
 //		for (Student student : students) {

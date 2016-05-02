@@ -36,12 +36,13 @@ ${user}, hello!<br/>
       <td>${student.lastName}</td>
       <td>(Login: ${student.login})</td>
     </tr>
+    <%--TODO
     <tr>
       <td><b>Course:</b> ${student.learningCourse}</td>
       <td><b>mark:</b>
         <c:if test="${student.mark != 0}"> ${student.mark} </c:if></td>
       <td colspan="2"><b>feedback:</b> ${student.feedback}</td>
-    </tr>
+    </tr>--%>
   </c:forEach>
 </table>
 <br/>

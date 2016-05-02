@@ -11,6 +11,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 /**
  * Created by Rabotnik on 20.04.2016.
  */
@@ -24,19 +26,19 @@ public class StudentDAO extends BaseDAO<Student> {
       Session session = util.getSession();
       transaction = session.beginTransaction();
 
-      String studentHql = "SELECT S.id FROM Student as S WHERE S.login =\'"+login+"\'";
+      String studentHql = "SELECT S.id FROM Student as S WHERE S.login =\'" + login + "\'";
       Query studentQuery = session.createQuery(studentHql);
       Integer studentId = (Integer) studentQuery.uniqueResult();
       Student student = (Student) session.get(Student.class, studentId);
 
-      System.out.print("\n----------\n"+ student+"\n----------\n");
+      log.info("\n----------\n" + student + "\n----------\n");
 
       String LecturerHql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + courseId;
       Query lecturerQuery = session.createQuery(LecturerHql);
       Integer lecturerId = (Integer) lecturerQuery.uniqueResult();
       Lecturer lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
 
-      System.out.print("\n----------\n"+ lecturer+"\n----------\n");
+      log.info("\n----------\n" + lecturer + "\n----------\n");
 
       Relation relation = new Relation();
       relation.setStudent(student);
@@ -53,6 +55,26 @@ public class StudentDAO extends BaseDAO<Student> {
       transaction.rollback();
       throw new DaoException(e);
     }
+  }
+
+  public List<Student> getStudents() {
+    List<Student> students = null;
+    try {
+      util = HibernateUtil.getHibernateUtil();
+      Session session = util.getSession();
+      transaction = session.beginTransaction();
+
+      String studentsHql = "FROM Student";
+      Query studentsQuery = session.createQuery(studentsHql);
+      students = studentsQuery.list();
+
+      log.info("\n----------\n" + students + "\n----------\n");
+
+    } catch (HibernateException e) {
+      log.error("Error get students in DAO" + e);
+      transaction.rollback();
+    }
+    return students;
   }
 
 

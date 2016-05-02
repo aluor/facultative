@@ -1,6 +1,7 @@
 package by.pvt.aliushkevich.comands;
 
 import by.pvt.aliushkevich.constants.Const;
+import by.pvt.aliushkevich.daoServices.StudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.logic.LoginLogic;
 import org.apache.log4j.Logger;
@@ -26,8 +27,7 @@ public class LoginCommand implements ActionCommand {
     if (LoginLogic.checkLecturerLogin(login, pass)) {
       session.setAttribute("userType", ClientType.LECTURER);
 
-      //TODO
-//			request.setAttribute("students", StudentService.getInstance().getStudents());
+      request.setAttribute("students", StudentService.getInstance().getStudents());
 
       page = "/jsp/lecturer.jsp";
     } else if (LoginLogic.checkStudentLogin(login, pass)) {
