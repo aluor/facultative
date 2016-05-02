@@ -1,11 +1,60 @@
 package by.pvt.aliushkevich.dao;
 
+import by.pvt.aliushkevich.exceptions.DaoException;
+import by.pvt.aliushkevich.pojos.Lecturer;
+import by.pvt.aliushkevich.pojos.Relation;
 import by.pvt.aliushkevich.pojos.Student;
+import by.pvt.aliushkevich.util.HibernateUtil;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * Created by Rabotnik on 20.04.2016.
  */
-public class StudentDAO extends BaseDAO<Student>{
+public class StudentDAO extends BaseDAO<Student> {
+  private static Logger log = Logger.getLogger(StudentDAO.class);
+  private Transaction transaction = null;
+
+  public void addLearningCourse(String login, int courseId) throws DaoException {
+    try {
+      util = HibernateUtil.getHibernateUtil();
+      Session session = util.getSession();
+      transaction = session.beginTransaction();
+
+      String studentHql = "SELECT S.id FROM Student as S WHERE S.login =\'"+login+"\'";
+      Query studentQuery = session.createQuery(studentHql);
+      Integer studentId = (Integer) studentQuery.uniqueResult();
+      Student student = (Student) session.get(Student.class, studentId);
+
+      System.out.print("\n----------\n"+ student+"\n----------\n");
+
+      String LecturerHql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + courseId;
+      Query lecturerQuery = session.createQuery(LecturerHql);
+      Integer lecturerId = (Integer) lecturerQuery.uniqueResult();
+      Lecturer lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
+
+      System.out.print("\n----------\n"+ lecturer+"\n----------\n");
+
+      Relation relation = new Relation();
+      relation.setStudent(student);
+      relation.setLecturer(lecturer);
+      student.getRelations().add(relation);
+      lecturer.getRelations().add(relation);
+
+      session.saveOrUpdate(student);
+      log.info("saveOrUpdate(student):" + student);
+      transaction.commit();
+      log.info("Save or update (commit):" + student);
+    } catch (HibernateException e) {
+      log.error("Error save or update student in DAO" + e);
+      transaction.rollback();
+      throw new DaoException(e);
+    }
+  }
+
 
 }
 

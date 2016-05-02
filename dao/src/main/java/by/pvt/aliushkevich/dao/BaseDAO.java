@@ -67,7 +67,7 @@ public class BaseDAO<T> implements DAO<T> {
     return person;
   }
 
-  private Class getPersistentClass() {
+  protected Class getPersistentClass() {
     return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
   }
 

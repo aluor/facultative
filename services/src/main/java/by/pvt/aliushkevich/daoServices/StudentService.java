@@ -32,11 +32,11 @@ public class StudentService {
     studentDao.delete(student);
   }
 
+  public void addLearningCourse(String login, int courseId) throws DaoException {
+    studentDao.addLearningCourse(login, courseId);
+  }
+
 //TODO
-//  public void addLearningCourse(String login, int courseId) throws SQLException {
-//    studentDao.addLearningCourse(login, courseId);
-//  }
-//
 //  public ArrayList<Student> getStudents() {
 //    return studentDao.getClients();
 //  }

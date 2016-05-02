@@ -20,7 +20,7 @@ public class LoginLogic {
 	}
 
 	public static boolean checkStudentLogin(String enterLogin, String enterPass) {
-		boolean check = false;
+		boolean check = true; //true - for debug only!!! (false needed)
 //    TODO
 //		ArrayList<Student> students = StudentService.getInstance().getStudents();
 //		for (Student student : students) {
