@@ -9,11 +9,12 @@ import java.util.List;
 /**
  * Created by Rabotnik on 10.04.2016.
  */
-public class StudentService {
+public class StudentService extends BaseService<Student>{
   private StudentDAO studentDao;
   private static StudentService studentService;
 
   private StudentService() {
+    super();
     studentDao = new StudentDAO();
   }
 
@@ -24,14 +25,6 @@ public class StudentService {
     } else {
       return studentService;
     }
-  }
-
-  public void addStudent(Student student) throws DaoException {
-    studentDao.saveOrUpdate(student);
-  }
-
-  public void deleteStudent(Student student) throws DaoException {
-    studentDao.delete(student);
   }
 
   public void addLearningCourse(String login, int courseId) throws DaoException {

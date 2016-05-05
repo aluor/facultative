@@ -24,7 +24,7 @@ public class StudentRegisterCommand implements ActionCommand {
     student.setPassword(request.getParameter("password"));
     if (request.getParameter("firstName") != "" && request.getParameter("lastName") != "" && request.getParameter("login") != "" && request.getParameter("password") != "") {
       try {
-        StudentService.getInstance().addStudent(student);
+        StudentService.getInstance().addClient(student);
       } catch (DaoException e) {
         logger.debug("Incorrect input: Try to input another data");
         request.setAttribute("errorMessage", "Incorrect input: Try to input another data");

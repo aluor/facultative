@@ -23,6 +23,7 @@ public class JSPSequrityFilter implements Filter {
 		// переход на заданную страницу
 		httpResponse.sendRedirect(httpRequest.getContextPath() + indexPath);
 		chain.doFilter(request, response);
+
 	}
 
 	public void destroy() {

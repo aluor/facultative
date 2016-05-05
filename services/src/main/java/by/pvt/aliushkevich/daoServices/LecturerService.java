@@ -1,17 +1,17 @@
 package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.LecturerDAO;
-import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Lecturer;
 
 /**
  * Created by Rabotnik on 10.04.2016.
  */
-public class LecturerService {
+public class LecturerService extends BaseService<Lecturer>{
   private LecturerDAO lecturerDAO;
   private static LecturerService lecturerService;
 
   private LecturerService() {
+    super();
     lecturerDAO = new LecturerDAO();
   }
 
@@ -24,9 +24,6 @@ public class LecturerService {
     }
   }
 
-  public void addLecturer(Lecturer lecturer) throws DaoException {
-    lecturerDAO.saveOrUpdate(lecturer);
-  }
 //TODO
 //  public void addMarkFeedback(int mark, String feedback, int studentId, int courseId) {
 //    lecturerDAO.addMarkFeedback(mark, feedback, studentId, courseId);
