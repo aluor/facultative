@@ -5,66 +5,57 @@ import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
 public class BaseDAO<T> implements DAO<T> {
   private static Logger log = Logger.getLogger(BaseDAO.class);
   public static HibernateUtil util = null;
-  private Transaction transaction = null;
 
   public BaseDAO() {
   }
 
-  public void saveOrUpdate(T person) throws DaoException {
+  public void saveOrUpdate(T client) throws DaoException {
+    log.info("trying saveOrUpdate client:" + client);
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
-      transaction = session.beginTransaction();
-      session.saveOrUpdate(person);
-      log.info("saveOrUpdate(person):" + person);
-      transaction.commit();
-      log.info("Save or update (commit):" + person);
+      session.saveOrUpdate(client);
+      log.info("saveOrUpdate(client): SUCCESS");
     } catch (HibernateException e) {
-      log.error("Error save or update PERSON in DAO" + e);
-      transaction.rollback();
+      log.error("Error saveOrUpdate client" + e);
       throw new DaoException(e);
     }
 
   }
 
-  public void delete(T person) throws DaoException {
+  public void delete(T client) throws DaoException {
+    log.info("trying delete client:" + client);
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
-      transaction = session.beginTransaction();
-      session.delete(person);
-      transaction.commit();
-      log.info("Delete:" + person);
+      session.delete(client);
+      log.info("Delete client: SUCCESS");
     } catch (HibernateException e) {
-      log.error("Error delete PERSON in DAO" + e);
-      transaction.rollback();
+      log.error("Error delete client" + e);
       throw new DaoException(e);
     }
   }
 
   public T get(Serializable id) throws DaoException {
-    log.info("Get class by id:" + id);
-    T person = null;
+    log.info("Trying get client by id:" + id);
+    T client = null;
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
-      transaction = session.beginTransaction();
-      person = (T) session.get(getPersistentClass(), id);
-      transaction.commit();
-      log.info("get clazz:" + person);
+      client = (T) session.get(getPersistentClass(), id);
+      log.info("get client (clazz):" + client);
     } catch (HibernateException e) {
-      transaction.rollback();
-      log.error("Error get " + getPersistentClass() + " in Dao" + e);
+      log.error("Error get " + getPersistentClass() + e);
       throw new DaoException(e);
     }
-    return person;
+    return client;
   }
 
   protected Class getPersistentClass() {

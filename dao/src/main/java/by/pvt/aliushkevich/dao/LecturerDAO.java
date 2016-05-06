@@ -1,8 +1,63 @@
 package by.pvt.aliushkevich.dao;
 
+import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Lecturer;
+import by.pvt.aliushkevich.util.HibernateUtil;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-public class LecturerDAO extends BaseDAO<Lecturer>{
+import java.util.List;
+
+public class LecturerDAO extends BaseDAO<Lecturer> {
+
+  private static Logger log = Logger.getLogger(LecturerDAO.class);
+//  private Transaction transaction = null;
+
+  public Lecturer getLecturerByCourseId(int courseId) throws DaoException {
+    Lecturer lecturer = null;
+    try {
+      util = HibernateUtil.getHibernateUtil();
+      Session session = util.getSession();
+
+//      transaction = session.beginTransaction();
+      String hql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + courseId;
+      Query query = session.createQuery(hql);
+      Integer lecturerId = (Integer) query.uniqueResult();
+      lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
+
+      log.info("\n----------\n" + lecturer + "\n----------\n");
+//      transaction.commit();
+
+    } catch (HibernateException e) {
+      log.error("Error get lecturer in DAO" + e);
+//      transaction.rollback();
+      throw new DaoException(e);
+    }
+    return lecturer;
+  }
+
+  public List<Lecturer> getLecturers() {
+    List<Lecturer> lecturers = null;
+    try {
+      util = HibernateUtil.getHibernateUtil();
+      Session session = util.getSession();
+//      transaction = session.beginTransaction();
+
+      String hql = "FROM Lecturer";
+      Query query = session.createQuery(hql);
+      lecturers = query.list();
+
+      log.info("\n----------\n" + lecturers + "\n----------\n");
+
+    } catch (HibernateException e) {
+      log.error("Error get lecturers in DAO" + e);
+//      transaction.rollback();
+    }
+    return lecturers;
+  }
+
 
 }
 
