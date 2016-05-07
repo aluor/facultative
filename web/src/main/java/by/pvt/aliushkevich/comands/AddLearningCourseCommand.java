@@ -21,8 +21,8 @@ public class AddLearningCourseCommand implements ActionCommand {
 		try {
 			StudentService.getInstance().addLearningCourse(login, choice);
 		} catch (DaoException e) {
-			System.err.println("Incorrect input: You have already signed on that course");
-			request.setAttribute("errorMessage", "Incorrect input: You have already signed on that course");
+			log.info("Incorrect input: You have already signed on that course or this course is not available");
+			request.setAttribute("errorMessage", "Incorrect input: You have already signed on that course or this course is not available");
 			page = "/jsp/fail.jsp";
 			log.info("AddLearningCourseCommand returned: " +page);
 			return page;

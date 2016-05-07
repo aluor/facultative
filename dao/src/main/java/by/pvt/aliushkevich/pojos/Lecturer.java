@@ -55,7 +55,7 @@ public class Lecturer implements Serializable {
     this.lastName = lastName;
   }
 
-  @Column
+  @Column(unique = true)
   public String getLogin() {
     return login;
   }

@@ -13,8 +13,7 @@ import java.io.IOException;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {	
-	static Logger logger = Logger.getLogger(Controller.class.getName());
-	//static Logger logger = Logger.getRootLogger();
+	static Logger log = Logger.getLogger(Controller.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -28,11 +27,11 @@ public class Controller extends HttpServlet {
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {		
-		logger.debug("controller used...");		
+		log.info("controller used...");
 		String page = "/jsp/login.jsp";
 		// определение команды, пришедшей из JSP
 		String action = request.getParameter("command");
-		logger.debug("controller recieved parameter: " +action);		
+		log.info("controller received parameter: " +action);
 		/*
 		 * вызов реализованного метода execute() и передача параметров
 		 * классу-обработчику конкретной команды
@@ -67,13 +66,13 @@ public class Controller extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
 			// вызов страницы ответа на запрос
 			dispatcher.forward(request, response);
-			logger.debug("controller forward client to: " +page);
+			log.info("controller forward client to: " +page);
 		} else {
-			// установка страницы c cообщением об ошибке
+			// установка страницы c сообщением об ошибке
 			page = "/jsp/login.jsp";
 			request.getSession().setAttribute("nullPage", "Page not found. Business logic error.");
 			response.sendRedirect(request.getContextPath() + page);
-			logger.error("controller could not found the page");
+			log.error("controller could not found the page");
 		}
 	}
 }

@@ -9,11 +9,9 @@ import by.pvt.aliushkevich.pojos.Student;
 import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -50,15 +48,28 @@ public class StudentService extends BaseService<Student> {
       transaction = session.beginTransaction();
       Student student = studentDAO.getStudentByLogin(login);
       Lecturer lecturer = lecturerDAO.getLecturerByCourseId(courseId);
-      Relation relation = new Relation();
-      relation.setStudent(student);
-      relation.setLecturer(lecturer);
-      student.getRelations().add(relation);
-      lecturer.getRelations().add(relation);
-      studentDAO.saveOrUpdate(student);
-      log.info("addLearningCourse(saveOrUpdate student):" + student);
-      transaction.commit();
-      log.info("addLearningCourse(commit): SUCCESS");
+
+      Set<Relation> relations = student.getRelations();
+      boolean hasLearningCourse = false;
+      for (Relation relation : relations) {
+        if (relation.getStudent() == student && relation.getLecturer() == lecturer) {
+          hasLearningCourse = true;
+        }
+      }
+      if (lecturer != null && !hasLearningCourse) {
+        Relation relation = new Relation();
+        relation.setStudent(student);
+        relation.setLecturer(lecturer);
+        student.getRelations().add(relation);
+        lecturer.getRelations().add(relation);
+        studentDAO.saveOrUpdate(student);
+        log.info("addLearningCourse(saveOrUpdate student):" + student);
+        transaction.commit();
+        log.info("addLearningCourse(commit): SUCCESS");
+      } else {
+        Exception e = null;
+        throw new DaoException(e);
+      }
     } catch (HibernateException e) {
       log.error("Error addLearningCourse to student" + e);
       transaction.rollback();
@@ -66,32 +77,13 @@ public class StudentService extends BaseService<Student> {
     }
   }
 
-  public Set<Student> getLecturerStudents (String lecturerLogin) {
+  public Set<Student> getLecturerStudents(String lecturerLogin) {
     log.info("trying getLecturerStudents...");
-    Set<Student> lecturerStudents = new HashSet<>();
-    try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
-      String hql = "SELECT L.id FROM Lecturer as L WHERE L.login =\'" + lecturerLogin + "\'";
-      Query query = session.createQuery(hql);
-      Integer lecturerId = (Integer) query.uniqueResult();
-      Lecturer lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
-      log.info("\n----------\n" + lecturer + "\n----------\n");
-      Set<Relation> relations = lecturer.getRelations();
-      for (Relation relation: relations) {
-        log.info("relation.getStudent(): "+relation.getStudent());
-        lecturerStudents.add(relation.getStudent());
-      }
-      log.info("\n----------\n" + lecturerStudents + "\n----------\n");
-    } catch (HibernateException e) {
-      log.error("Error getLecturerStudents" + e);
-    }
-    return lecturerStudents;
+    return studentDAO.getLecturerStudents(lecturerLogin);
   }
 
-
-
   public List<Student> getStudents() {
+    log.info("trying getStudents...");
     return studentDAO.getStudents();
   }
 

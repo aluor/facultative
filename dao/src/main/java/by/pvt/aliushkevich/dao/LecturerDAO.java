@@ -22,8 +22,10 @@ public class LecturerDAO extends BaseDAO<Lecturer> {
       String hql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + courseId;
       Query query = session.createQuery(hql);
       Integer lecturerId = (Integer) query.uniqueResult();
-      lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
-      log.info("\n----------\n" + lecturer + "\n----------\n");
+      if (lecturerId != null) {
+        lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
+        log.info("\n----------\n" + lecturer + "\n----------\n");
+      }
     } catch (HibernateException e) {
       log.error("Error getLecturerByCourseId" + e);
       throw new DaoException(e);

@@ -34,11 +34,11 @@ public class StudentRegisterCommand implements ActionCommand {
       }
       page = "/jsp/success.jsp";
       session.setAttribute("userType", ClientType.STUDENT);
-      log.debug("StudentRegisterCommand returned: " + page);
+      log.info("StudentRegisterCommand returned: " + page);
       return page;
     } else {
       page = "/jsp/fail.jsp";
-      log.debug("Incorrect input: Empty field(s) left");
+      log.info("Incorrect input: Empty field(s) left");
       request.setAttribute("errorMessage", "Incorrect input: Empty field(s) left");
       return page;
     }

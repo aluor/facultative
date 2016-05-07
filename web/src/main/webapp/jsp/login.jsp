@@ -30,7 +30,7 @@
 	<br /> lecturer login/password: LecturerX / XXX (X=1..3)
 	<br />
 	<br />Debug info - session = ${sessionScope}
-	<br /> (You can see debug info also in D:\facultative.log)
+	<br /> (You can see log info also in D:\facultative.log)
 	<br /> ${wrongAction}
 	<br /> ${nullPage}
 	<br />
