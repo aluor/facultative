@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class AddLearningCourseCommand implements ActionCommand {
-	static Logger logger = Logger.getLogger(AddLearningCourseCommand.class.getName());
+	static Logger log = Logger.getLogger(AddLearningCourseCommand.class);
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		  logger.debug("AddLearningCourseCommand used...");
+		  log.info("AddLearningCourseCommand used...");
 		String page = null;
 		// извлечение из запроса выбора курса обучения
 		HttpSession session = request.getSession();
@@ -24,11 +24,11 @@ public class AddLearningCourseCommand implements ActionCommand {
 			System.err.println("Incorrect input: You have already signed on that course");
 			request.setAttribute("errorMessage", "Incorrect input: You have already signed on that course");
 			page = "/jsp/fail.jsp";
-			logger.debug("AddLearningCourseCommand returned: " +page);
+			log.info("AddLearningCourseCommand returned: " +page);
 			return page;
 		}
 		page = "/jsp/success.jsp";
-		logger.debug("AddLearningCourseCommand returned: " +page);
+		log.info("AddLearningCourseCommand returned: " +page);
 		return page;
 	}
 }

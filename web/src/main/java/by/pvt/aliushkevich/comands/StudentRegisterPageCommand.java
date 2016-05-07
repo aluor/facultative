@@ -5,13 +5,13 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 public class StudentRegisterPageCommand implements ActionCommand {
-	static Logger logger = Logger.getLogger(StudentRegisterPageCommand.class.getName());
+	static Logger log = Logger.getLogger(StudentRegisterPageCommand.class);
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		logger.debug("StudentRegisterPageCommand used...");
+		log.info("StudentRegisterPageCommand used...");
 		String page = "/jsp/register.jsp";		
-		logger.debug("StudentRegisterPageCommand returned: " + page);
+		log.info("StudentRegisterPageCommand returned: " + page);
 		return page;
 	}
 }

@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements ActionCommand {
-  static Logger logger = Logger.getLogger(LoginCommand.class.getName());
+  static Logger log = Logger.getLogger(LoginCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) {
-    logger.debug("LoginCommand used...");
+    log.info("LoginCommand used...");
     String page = null;
     // извлечение из запроса логина и пароля
     String login = request.getParameter("login");
@@ -27,7 +27,7 @@ public class LoginCommand implements ActionCommand {
     if (LoginLogic.checkLecturerLogin(login, pass)) {
       session.setAttribute("userType", ClientType.LECTURER);
 
-      request.setAttribute("students", StudentService.getInstance().getStudents());
+      request.setAttribute("students", StudentService.getInstance().getLecturerStudents(login));
 
       page = "/jsp/lecturer.jsp";
     } else if (LoginLogic.checkStudentLogin(login, pass)) {
@@ -39,7 +39,7 @@ public class LoginCommand implements ActionCommand {
       request.getSession().setAttribute("userType", ClientType.GUEST);
       page = "/jsp/login.jsp";
     }
-    logger.debug("LoginCommand returned: " + page);
+    log.info("LoginCommand returned: " + page);
     return page;
   }
 }

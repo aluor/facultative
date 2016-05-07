@@ -44,7 +44,7 @@ public class BaseDAO<T> implements DAO<T> {
   }
 
   public T get(Serializable id) throws DaoException {
-    log.info("Trying get client by id:" + id);
+    log.info("Trying get client by id:" +id+"...");
     T client = null;
     try {
       util = HibernateUtil.getHibernateUtil();

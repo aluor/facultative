@@ -94,7 +94,7 @@ public class Lecturer implements Serializable {
   @Override
   public String toString() {
     return "Lecturer №" + id + ": " + firstName + " " + lastName + " (login: " + login + ")\n"
-        + "Teaches courses:" + courseId + "relations: " + relations;
+        + "Teaches course:" + courseId + " relations: " + relations;
   }
 }
 

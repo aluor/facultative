@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class StudentRegisterCommand implements ActionCommand {
-  static Logger logger = Logger.getLogger(StudentRegisterCommand.class.getName());
+  static Logger log = Logger.getLogger(StudentRegisterCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) {
-    logger.debug("StudentRegisterCommand used...");
+    log.info("StudentRegisterCommand used...");
     String page = null;
     HttpSession session = request.getSession();
     Student student = new Student();
@@ -26,19 +26,19 @@ public class StudentRegisterCommand implements ActionCommand {
       try {
         StudentService.getInstance().addClient(student);
       } catch (DaoException e) {
-        logger.debug("Incorrect input: Try to input another data");
+        log.info("Incorrect input: Try to input another data");
         request.setAttribute("errorMessage", "Incorrect input: Try to input another data");
         page = "/jsp/fail.jsp";
-        logger.debug("StudentRegisterCommand returned: " + page);
+        log.info("StudentRegisterCommand returned: " + page);
         return page;
       }
       page = "/jsp/success.jsp";
       session.setAttribute("userType", ClientType.STUDENT);
-      logger.debug("StudentRegisterCommand returned: " + page);
+      log.debug("StudentRegisterCommand returned: " + page);
       return page;
     } else {
       page = "/jsp/fail.jsp";
-      logger.debug("Incorrect input: Empty field(s) left");
+      log.debug("Incorrect input: Empty field(s) left");
       request.setAttribute("errorMessage", "Incorrect input: Empty field(s) left");
       return page;
     }

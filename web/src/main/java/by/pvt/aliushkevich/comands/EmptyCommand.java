@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 public class EmptyCommand implements ActionCommand {
-	static Logger logger = Logger.getLogger(EmptyCommand.class.getName());
+	static Logger log = Logger.getLogger(EmptyCommand.class);
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		logger.debug("EmptyCommand used...");
+		log.info("EmptyCommand used...");
 		String page = "/jsp/login.jsp";
-		logger.debug("EmptyCommand returned: " +page);
+		log.info("EmptyCommand returned: " +page);
 		return page;
 	}
 }
