@@ -18,11 +18,18 @@ public class AddMarkFeedbackCommand implements ActionCommand {
   public String execute(HttpServletRequest request) {
     log.info("AddMarkFeedbackCommand used...");
     try {
-      courseId = Integer.parseInt(request.getParameter("courseId"));
+//      courseId = Integer.parseInt(request.getParameter("courseId"));
+      String login = (String) request.getSession().getAttribute("user");
+      try {
+        courseId = LecturerService.getInstance().getCourseIdByLogin(login);
+      } catch (DaoException e) {
+        log.error("Error getCourseIdByLogin");
+        request.setAttribute("errorMessage", "Can not getCourseIdByLogin");
+      }
       studentId = Integer.parseInt(request.getParameter("studentId"));
       mark = Integer.parseInt(request.getParameter("mark"));
     } catch (NumberFormatException e) {
-      System.err.println("Incorrect data or empty field left");
+      log.error("Incorrect data or empty field left");
       request.setAttribute("errorMessage", "Incorrect data or empty field left");
       return page = "/jsp/fail.jsp";
     }
@@ -44,13 +51,6 @@ public class AddMarkFeedbackCommand implements ActionCommand {
         request.setAttribute("errorMessage", "Incorrect data or empty field left");
         page = "/jsp/fail.jsp";
       }
-//			if (LecturerService.getInstance().hasMarkFeedback(mark, feedback, studentId, courseId)) {
-//				page = "/jsp/success.jsp";
-//			} else {
-//				request.setAttribute("errorMessage", "Incorrect data or empty field left");
-//				page = "/jsp/fail.jsp";
-//			}
-
     }
     log.info("AddMarkFeedbackCommand returned: " + page);
     return page;

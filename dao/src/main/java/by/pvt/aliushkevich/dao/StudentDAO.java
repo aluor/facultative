@@ -22,7 +22,7 @@ public class StudentDAO extends BaseDAO<Student> {
 
   public Student getStudentByLogin(String login) throws DaoException {
     Student student = null;
-    log.info("Trying getStudentByLogin "+login+"...");
+    log.info("Trying getStudentByLogin " + login + "...");
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
@@ -54,7 +54,7 @@ public class StudentDAO extends BaseDAO<Student> {
     return students;
   }
 
-  public Set<Student> getLecturerStudents (String lecturerLogin) {
+  public Set<Student> getLecturerStudents(String lecturerLogin) {
     log.info("trying getLecturerStudents...");
     Set<Student> lecturerStudents = new HashSet<>();
     try {
@@ -66,8 +66,8 @@ public class StudentDAO extends BaseDAO<Student> {
       Lecturer lecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
       log.info("\n----------\n" + lecturer + "\n----------\n");
       Set<Relation> relations = lecturer.getRelations();
-      for (Relation relation: relations) {
-        log.info("relation.getStudent(): "+relation.getStudent());
+      for (Relation relation : relations) {
+        log.info("relation.getStudent(): " + relation.getStudent());
         lecturerStudents.add(relation.getStudent());
       }
       log.info("\n----------\n" + lecturerStudents + "\n----------\n");

@@ -70,12 +70,13 @@ public class LecturerService extends BaseService<Lecturer> {
   }
 
   public List<Lecturer> getLecturers() {
+    log.info("trying getLecturers...");
     return lecturerDAO.getLecturers();
   }
 
-//TODO
-//  public boolean hasMarkFeedback(int mark, String feedback, int studentId, int courseId) {
-//    return lecturerDAO.hasMarkFeedback(mark, feedback, studentId, courseId);
-//  }
+  public int getCourseIdByLogin(String login) throws DaoException {
+    log.info("trying getCourseIdByLogin...");
+    return lecturerDAO.getCourseIdByLogin(login);
+  }
 
 }

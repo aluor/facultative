@@ -1,9 +1,11 @@
 package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.LecturerDAO;
+import by.pvt.aliushkevich.dao.RelationDAO;
 import by.pvt.aliushkevich.dao.StudentDAO;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Lecturer;
+import by.pvt.aliushkevich.pojos.LecturerValueStudent;
 import by.pvt.aliushkevich.pojos.Relation;
 import by.pvt.aliushkevich.pojos.Student;
 import by.pvt.aliushkevich.util.HibernateUtil;
@@ -12,6 +14,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +24,7 @@ import java.util.Set;
 public class StudentService extends BaseService<Student> {
   private StudentDAO studentDAO;
   private LecturerDAO lecturerDAO;
+  private RelationDAO relationDAO;
   private static StudentService studentService;
   private Transaction transaction;
   private static Logger log = Logger.getLogger(StudentService.class);
@@ -29,6 +33,7 @@ public class StudentService extends BaseService<Student> {
     super();
     studentDAO = new StudentDAO();
     lecturerDAO = new LecturerDAO();
+    relationDAO = new RelationDAO();
   }
 
   public static StudentService getInstance() {
@@ -77,9 +82,22 @@ public class StudentService extends BaseService<Student> {
     }
   }
 
-  public Set<Student> getLecturerStudents(String lecturerLogin) {
-    log.info("trying getLecturerStudents...");
-    return studentDAO.getLecturerStudents(lecturerLogin);
+  public Set<LecturerValueStudent> getLecturerValueStudents(String lecturerLogin) throws DaoException {
+    log.info("trying getLecturerValueStudents...");
+    Set<LecturerValueStudent> lecturerValueStudents = new HashSet<>();
+    Lecturer lecturer = lecturerDAO.getLecturerByLogin(lecturerLogin);
+    Set<Student> students= studentDAO.getLecturerStudents(lecturerLogin);
+    for (Student student: students){
+      LecturerValueStudent lecturerValueStudent = new LecturerValueStudent();
+      lecturerValueStudent.setId(student.getId());
+      lecturerValueStudent.setFirstName(student.getFirstName());
+      lecturerValueStudent.setLastName(student.getLastName());
+      lecturerValueStudent.setLogin(student.getLogin());
+      lecturerValueStudent.setMark(relationDAO.getMark(student.getId(), lecturer.getId()));
+      lecturerValueStudent.setFeedback(relationDAO.getFeedback(student.getId(), lecturer.getId()));
+      lecturerValueStudents.add(lecturerValueStudent);
+    }
+    return lecturerValueStudents;
   }
 
   public List<Student> getStudents() {
