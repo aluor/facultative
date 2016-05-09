@@ -5,7 +5,6 @@ import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +14,7 @@ public class StudentRegisterCommand implements ActionCommand {
   @Override
   public String execute(HttpServletRequest request) {
     log.info("StudentRegisterCommand used...");
-    String page = null;
+    String page;
     HttpSession session = request.getSession();
     Student student = new Student();
     student.setFirstName(request.getParameter("firstName"));
@@ -42,6 +41,6 @@ public class StudentRegisterCommand implements ActionCommand {
       request.setAttribute("errorMessage", "Incorrect input: Empty field(s) left");
       return page;
     }
-
   }
+
 }

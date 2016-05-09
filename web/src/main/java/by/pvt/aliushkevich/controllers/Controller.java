@@ -2,7 +2,6 @@ package by.pvt.aliushkevich.controllers;
 
 import by.pvt.aliushkevich.comands.*;
 import org.apache.log4j.Logger;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +27,7 @@ public class Controller extends HttpServlet {
 	private void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {		
 		log.info("controller used...");
-		String page = "/jsp/login.jsp";
+		String page;
 		// определение команды, пришедшей из JSP
 		String action = request.getParameter("command");
 		log.info("controller received parameter: " +action);
@@ -36,7 +35,7 @@ public class Controller extends HttpServlet {
 		 * вызов реализованного метода execute() и передача параметров
 		 * классу-обработчику конкретной команды
 		 */
-		ActionCommand command = null;
+		ActionCommand command;
 		switch (action) {
 		case "login":
 			command = new LoginCommand();
@@ -66,13 +65,14 @@ public class Controller extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
 			// вызов страницы ответа на запрос
 			dispatcher.forward(request, response);
-			log.info("controller forward client to: " +page);
+			log.info("controller forward client to: "+page);
 		} else {
 			// установка страницы c сообщением об ошибке
 			page = "/jsp/login.jsp";
-			request.getSession().setAttribute("nullPage", "Page not found. Business logic error.");
+			request.getSession().setAttribute("nullPage", "Page not found. Business logic error");
 			response.sendRedirect(request.getContextPath() + page);
 			log.error("controller could not found the page");
 		}
 	}
+
 }

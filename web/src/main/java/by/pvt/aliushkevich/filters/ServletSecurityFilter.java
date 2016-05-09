@@ -2,7 +2,6 @@ package by.pvt.aliushkevich.filters;
 
 import by.pvt.aliushkevich.dao.BaseDAO;
 import by.pvt.aliushkevich.enums.ClientType;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,8 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/controller"}, servletNames = {"Controller"})
 public class ServletSecurityFilter implements Filter {
-  public void destroy() {
+
+  public void init(FilterConfig fConfig) throws ServletException {
   }
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -21,7 +21,6 @@ public class ServletSecurityFilter implements Filter {
     HttpServletResponse resp = (HttpServletResponse) response;
     HttpSession session = req.getSession();
     ClientType type = (ClientType) session.getAttribute("userType");
-    String login = req.getParameter("login");
     if (type == null) {
       type = ClientType.GUEST;
       session.setAttribute("userType", type);
@@ -31,11 +30,11 @@ public class ServletSecurityFilter implements Filter {
         return;
       }
     }
-    // pass the request along the filter chain
     chain.doFilter(request, response);
     BaseDAO.util.closeSession();
   }
 
-  public void init(FilterConfig fConfig) throws ServletException {
+  public void destroy() {
   }
+
 }

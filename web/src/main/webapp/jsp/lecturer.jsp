@@ -38,7 +38,6 @@ ${user}, hello!<br/>
     </tr>
 
     <tr>
-     <%-- <td><b>Course:</b> ${student.learningCourse}</td>--%>
       <td><b>mark:</b>
         <c:if test="${student.mark != 0}"> ${student.mark} </c:if></td>
       <td colspan="3"><b>feedback:</b> ${student.feedback}</td>
@@ -49,10 +48,6 @@ ${user}, hello!<br/>
 
 <form name="addMarkFeedbackForm" method="POST" action="controller">
   <input type="hidden" name="command" value="addMarkFeedback"/>
-  <%--<b> Course*:</b> <br/>
-  <p><input name="courseId" type="radio" value="1"> Mathematics</p>
-  <p><input name="courseId" type="radio" value="2"> Physics</p>
-  <p><input name="courseId" type="radio" value="3"> English</p>--%>
   <b>Student ID*</b> <br/>
   <input type="text" name="studentId" value=""/> <br/> <br/>
   <b> Mark* </b><br/>

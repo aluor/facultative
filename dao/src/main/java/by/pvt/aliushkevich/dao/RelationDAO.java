@@ -15,9 +15,26 @@ public class RelationDAO extends BaseDAO<Relation> {
 
   private static Logger log = Logger.getLogger(LecturerDAO.class);
 
+  public int getRelationId(int studentId, int lecturerId) throws DaoException {
+    log.info("Trying getRelation...");
+    Integer relationId;
+    try {
+      util = HibernateUtil.getHibernateUtil();
+      Session session = util.getSession();
+      String hql = "SELECT R.id FROM Relation as R WHERE R.student.id = "+ studentId+" and R.lecturer.id = "+lecturerId;
+      Query query = session.createQuery(hql);
+      relationId = (Integer) query.uniqueResult();
+      log.info("relationId:"+relationId);
+    } catch (HibernateException e) {
+      log.error("Error getRelationId" + e);
+      throw new DaoException(e);
+    }
+    return relationId;
+  }
+
   public int getMark(int studentId, int lecturerId) throws DaoException {
     log.info("Trying getMark...");
-    Integer mark = null;
+    Integer mark;
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
@@ -34,7 +51,7 @@ public class RelationDAO extends BaseDAO<Relation> {
 
   public String getFeedback(int studentId, int lecturerId) throws DaoException {
     log.info("Trying getFeedback...");
-    String feedback = null;
+    String feedback;
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();

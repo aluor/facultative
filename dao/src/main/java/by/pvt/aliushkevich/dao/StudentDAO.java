@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +20,7 @@ public class StudentDAO extends BaseDAO<Student> {
   private static Logger log = Logger.getLogger(StudentDAO.class);
 
   public Student getStudentByLogin(String login) throws DaoException {
-    Student student = null;
+    Student student;
     log.info("Trying getStudentByLogin " + login + "...");
     try {
       util = HibernateUtil.getHibernateUtil();
@@ -76,28 +75,5 @@ public class StudentDAO extends BaseDAO<Student> {
     }
     return lecturerStudents;
   }
-
-
-//  public boolean hasLearningCourse(String login, int courseId) throws DaoException {
-//    log.info("trying execute hasLearningCourse...");
-//    boolean flag = false;
-//    try {
-//      util = HibernateUtil.getHibernateUtil();
-//      Session session = util.getSession();
-//
-//      String hql = "SELECT S.id FROM Student as S, Relation as R, Lecturer as L" +
-//          " WHERE S.login = \'"+login+"\' and  L.courseId = "+courseId+" and L.id = R.lecturer.id";
-//
-//      Query query = session.createQuery(hql);
-//        if (query.uniqueResult() != null) {
-//          flag = true;
-//          log.info("hasLearningCourse: true");
-//        }
-//    } catch (HibernateException e) {
-//      log.error("Error execute hasLearningCourse" + e);
-//      throw new DaoException(e);
-//    }
-//    return flag;
-//  }
 
 }

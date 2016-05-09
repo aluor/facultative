@@ -3,7 +3,6 @@ package by.pvt.aliushkevich.comands;
 import by.pvt.aliushkevich.daoServices.LecturerService;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class AddMarkFeedbackCommand implements ActionCommand {
@@ -18,7 +17,6 @@ public class AddMarkFeedbackCommand implements ActionCommand {
   public String execute(HttpServletRequest request) {
     log.info("AddMarkFeedbackCommand used...");
     try {
-//      courseId = Integer.parseInt(request.getParameter("courseId"));
       String login = (String) request.getSession().getAttribute("user");
       try {
         courseId = LecturerService.getInstance().getCourseIdByLogin(login);
@@ -34,11 +32,8 @@ public class AddMarkFeedbackCommand implements ActionCommand {
       return page = "/jsp/fail.jsp";
     }
     feedback = request.getParameter("feedback");
-
     log.info("AddMarkFeedbackCommand recieved: mark= " + mark + " feedback= "
         + feedback + " studentId= " + studentId + " courseId= " + courseId);
-
-
     if (feedback == "") {
       request.setAttribute("errorMessage", "Incorrect data or empty field left");
       page = "/jsp/fail.jsp";

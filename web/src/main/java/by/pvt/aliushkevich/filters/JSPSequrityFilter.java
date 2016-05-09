@@ -28,4 +28,5 @@ public class JSPSequrityFilter implements Filter {
 
 	public void destroy() {
 	}
+
 }

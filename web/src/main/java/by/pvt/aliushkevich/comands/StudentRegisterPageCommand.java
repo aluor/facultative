@@ -1,7 +1,6 @@
 package by.pvt.aliushkevich.comands;
 
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 public class StudentRegisterPageCommand implements ActionCommand {
@@ -14,4 +13,5 @@ public class StudentRegisterPageCommand implements ActionCommand {
 		log.info("StudentRegisterPageCommand returned: " + page);
 		return page;
 	}
+
 }

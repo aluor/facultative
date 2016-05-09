@@ -2,15 +2,12 @@ package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.LecturerDAO;
 import by.pvt.aliushkevich.dao.RelationDAO;
-import by.pvt.aliushkevich.dao.StudentDAO;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Relation;
-import by.pvt.aliushkevich.pojos.Student;
 import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,7 +18,6 @@ import java.util.List;
  */
 public class LecturerService extends BaseService<Lecturer> {
 
-  private StudentDAO studentDAO;
   private LecturerDAO lecturerDAO;
   private RelationDAO relationDAO;
   private static LecturerService lecturerService;
@@ -30,7 +26,6 @@ public class LecturerService extends BaseService<Lecturer> {
 
   private LecturerService() {
     super();
-    studentDAO = new StudentDAO();
     lecturerDAO = new LecturerDAO();
     relationDAO = new RelationDAO();
   }
@@ -50,11 +45,8 @@ public class LecturerService extends BaseService<Lecturer> {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
       transaction = session.beginTransaction();
-      Student student = studentDAO.get(studentId);
       Lecturer lecturer = lecturerDAO.getLecturerByCourseId(courseId);
-      String hql = "SELECT R.id FROM Relation as R WHERE R.student = \'"+ student.getId()+"\' and R.lecturer = \'"+lecturer.getId()+"\'";
-      Query query = session.createQuery(hql);
-      Integer relationId = (Integer) query.uniqueResult();
+      Integer relationId = relationDAO.getRelationId(studentId, lecturer.getId());
       Relation relation = relationDAO.get(relationId);
       relation.setMark(mark);
       relation.setFeedback(feedback);
@@ -62,7 +54,7 @@ public class LecturerService extends BaseService<Lecturer> {
       log.info("addMarkFeedback(saveOrUpdate relation):" + relation);
       transaction.commit();
       log.info("addMarkFeedback(commit): SUCCESS");
-    } catch (HibernateException e) {
+    } catch (NullPointerException | HibernateException e) {
       log.error("Error addMarkFeedback to student" + e);
       transaction.rollback();
       throw new DaoException(e);
