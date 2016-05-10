@@ -3,7 +3,9 @@ package by.pvt.aliushkevich.util;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
   private static HibernateUtil util = null;
@@ -13,8 +15,13 @@ public class HibernateUtil {
 
   private HibernateUtil() {
     try {
-      sessionFactory = new Configuration().
-          configure().buildSessionFactory();
+      /*sessionFactory = new Configuration().
+          configure().buildSessionFactory();*/
+      Configuration configuration = new Configuration().configure(HibernateUtil.class.getResource("/hibernate.cfg.xml"));
+      StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
+      serviceRegistryBuilder.applySettings(configuration.getProperties());
+      ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+      sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     } catch (Throwable ex) {
       log.error("Initial SessionFactory creation failed." + ex);
       System.exit(0);

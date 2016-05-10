@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+//@Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Lecturer implements Serializable {
   private static final long serialVersionUID = 1L;
   private int id;

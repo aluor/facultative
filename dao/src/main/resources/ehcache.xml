@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+
+  <diskStore path="java.io.tmpdir"/>
+
+  <defaultCashe
+    maxElementsInMemory="100"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="300"
+    overflowToDisk="true"
+    diskPersistent="false"
+    diskExpiryThreadIntervalSeconds="300"
+    memoryStoreEvictionPolicy="LRU"/>
+
+  <cache name="by.pvt.aliushkevich.pojos.Lecturer"
+         maxElementsInMemory="100"
+         eternal="false"
+         overflowToDisk="false"/>
+
+  <cache name="by.pvt.aliushkevich.pojos.Student"
+         maxElementsInMemory="100"
+         eternal="false"
+         overflowToDisk="false"/>
+
+  <cache name="by.pvt.aliushkevich.pojos.Relation"
+         maxElementsInMemory="100"
+         eternal="false"
+         overflowToDisk="false"/>
+
+</ehcache>
