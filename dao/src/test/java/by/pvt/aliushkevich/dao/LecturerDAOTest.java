@@ -9,10 +9,11 @@ import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.Set;
+import java.util.List;
 
 import static by.pvt.aliushkevich.dao.BaseDAO.util;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by Rabotnik on 11.04.2016.
@@ -26,9 +27,9 @@ public class LecturerDAOTest {
   private String testLastName = "testLastName";
   private String testLogin = "testLogin";
   private String testPassword = "testPassword";
-  private int testCourseId = 1;
+  private int testCourseId = -1;
   private Lecturer expectedLecturer;
-  private Set<Lecturer> lecturers;
+  private List<Lecturer> expectedLecturers;
 
   @Before
   public void setUp() throws Exception {
@@ -39,13 +40,14 @@ public class LecturerDAOTest {
     testLecturer.setLogin(testLogin);
     testLecturer.setPassword(testPassword);
     testLecturer.setCourseId(testCourseId);
-
     util = HibernateUtil.getHibernateUtil();
     Session session = util.getSession();
     transaction = session.beginTransaction();
     session.saveOrUpdate(testLecturer);
     transaction.commit();
     log.info("setUp testLecturer (commit): SUCCESS");
+    util.closeSession();
+    log.info("session closed");
   }
 
   @Test
@@ -57,8 +59,9 @@ public class LecturerDAOTest {
     Query query = session.createQuery(hql);
     Integer lecturerId = (Integer) query.uniqueResult();
     expectedLecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
-    assertEquals("getLecturerByLogin failed: testLecturer mismatch expectedLecturer", testLecturer, expectedLecturer);
+    assertEquals("getLecturerByLogin failed: testLecturer mismatch expectedLecturer", testLecturer.getLogin(), expectedLecturer.getLogin());
     log.info("getLecturerByLogin: SUCCESS");
+    util.closeSession();
   }
 
   @Test
@@ -71,16 +74,33 @@ public class LecturerDAOTest {
     int expectedCourseId = (Integer) query.uniqueResult();
     assertEquals("getCourseIdByLogin failed: testCourseId mismatch expectedCourseId", testCourseId, expectedCourseId);
     log.info("getCourseIdByLogin: SUCCESS");
+    util.closeSession();
   }
 
   @Test
   public void getLecturerByCourseId() throws Exception {
-
+    log.info("Testing getLecturerByCourseId: " + testCourseId + "...");
+    util = HibernateUtil.getHibernateUtil();
+    Session session = util.getSession();
+    String hql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + testCourseId;
+    Query query = session.createQuery(hql);
+    Integer lecturerId = (Integer) query.uniqueResult();
+    expectedLecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
+    assertEquals("getLecturerByCourseId failed: testLecturer mismatch expectedLecturer", testLecturer.getLogin(), expectedLecturer.getLogin());
+    log.info("\n-----getLecturerByCourseId: SUCCESS-----\n" + expectedLecturer + "\n----------------------------------------\n");
+    util.closeSession();
   }
 
   @Test
   public void getLecturers() throws Exception {
-
+    util = HibernateUtil.getHibernateUtil();
+    Session session = util.getSession();
+    String hql = "FROM Lecturer";
+    Query query = session.createQuery(hql);
+    expectedLecturers = query.list();
+    assertFalse("getLecturers failed:", expectedLecturers.isEmpty());
+    log.info("getLecturers (" + expectedLecturers.size() + " person): SUCCESS");
+    util.closeSession();
   }
 
   @After
@@ -92,5 +112,6 @@ public class LecturerDAOTest {
     session.delete(testLecturer);
     transaction.commit();
     log.info("Delete testLecturer: SUCCESS");
+    util.closeSession();
   }
 }
