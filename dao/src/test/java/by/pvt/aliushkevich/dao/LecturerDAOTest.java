@@ -3,12 +3,12 @@ package by.pvt.aliushkevich.dao;
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.List;
 
 import static by.pvt.aliushkevich.dao.BaseDAO.util;
@@ -22,19 +22,17 @@ public class LecturerDAOTest {
 
   private static Logger log = Logger.getLogger(LecturerDAOTest.class);
   private Transaction transaction;
-  private Lecturer testLecturer;
+  private LecturerDAO lecturerDAO = new LecturerDAO();
+  private Lecturer testLecturer = new Lecturer();
   private String testFirstName = "testFirstName";
   private String testLastName = "testLastName";
   private String testLogin = "testLogin";
   private String testPassword = "testPassword";
   private int testCourseId = -1;
-  private Lecturer expectedLecturer;
-  private List<Lecturer> expectedLecturers;
 
   @Before
   public void setUp() throws Exception {
     log.info("trying setUp testLecturer...");
-    testLecturer = new Lecturer();
     testLecturer.setFirstName(testFirstName);
     testLecturer.setLastName(testLastName);
     testLecturer.setLogin(testLogin);
@@ -53,12 +51,8 @@ public class LecturerDAOTest {
   @Test
   public void getLecturerByLogin() throws Exception {
     log.info("testing getLecturerByLogin... (testLecturer=" + testLecturer + ")");
-    util = HibernateUtil.getHibernateUtil();
-    Session session = util.getSession();
-    String hql = "SELECT L.id FROM Lecturer as L WHERE L.login =\'" + testLogin + "\'";
-    Query query = session.createQuery(hql);
-    Integer lecturerId = (Integer) query.uniqueResult();
-    expectedLecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
+    Lecturer expectedLecturer = lecturerDAO.getLecturerByLogin(testLogin);
+    log.info("(get expectedLecturer:=" + expectedLecturer + ")");
     assertEquals("getLecturerByLogin failed: testLecturer mismatch expectedLecturer", testLecturer.getLogin(), expectedLecturer.getLogin());
     log.info("getLecturerByLogin: SUCCESS");
     util.closeSession();
@@ -67,11 +61,7 @@ public class LecturerDAOTest {
   @Test
   public void getCourseIdByLogin() throws Exception {
     log.info("Testing getCourseIdByLogin: " + testLogin + ":...");
-    util = HibernateUtil.getHibernateUtil();
-    Session session = util.getSession();
-    String hql = "SELECT L.courseId FROM Lecturer as L WHERE L.login =\'" + testLogin + "\'";
-    Query query = session.createQuery(hql);
-    int expectedCourseId = (Integer) query.uniqueResult();
+    int expectedCourseId = lecturerDAO.getCourseIdByLogin(testLogin);
     assertEquals("getCourseIdByLogin failed: testCourseId mismatch expectedCourseId", testCourseId, expectedCourseId);
     log.info("getCourseIdByLogin: SUCCESS");
     util.closeSession();
@@ -80,12 +70,7 @@ public class LecturerDAOTest {
   @Test
   public void getLecturerByCourseId() throws Exception {
     log.info("Testing getLecturerByCourseId: " + testCourseId + "...");
-    util = HibernateUtil.getHibernateUtil();
-    Session session = util.getSession();
-    String hql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + testCourseId;
-    Query query = session.createQuery(hql);
-    Integer lecturerId = (Integer) query.uniqueResult();
-    expectedLecturer = (Lecturer) session.get(Lecturer.class, lecturerId);
+    Lecturer expectedLecturer = lecturerDAO.getLecturerByCourseId(testCourseId);
     assertEquals("getLecturerByCourseId failed: testLecturer mismatch expectedLecturer", testLecturer.getLogin(), expectedLecturer.getLogin());
     log.info("\n-----getLecturerByCourseId: SUCCESS-----\n" + expectedLecturer + "\n----------------------------------------\n");
     util.closeSession();
@@ -93,11 +78,7 @@ public class LecturerDAOTest {
 
   @Test
   public void getLecturers() throws Exception {
-    util = HibernateUtil.getHibernateUtil();
-    Session session = util.getSession();
-    String hql = "FROM Lecturer";
-    Query query = session.createQuery(hql);
-    expectedLecturers = query.list();
+    List<Lecturer> expectedLecturers = lecturerDAO.getLecturers();
     assertFalse("getLecturers failed:", expectedLecturers.isEmpty());
     log.info("getLecturers (" + expectedLecturers.size() + " person): SUCCESS");
     util.closeSession();
