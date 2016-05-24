@@ -1,6 +1,5 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.comands.*;
 import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -9,12 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 //@WebServlet("/controller")
 @Controller
@@ -22,9 +16,11 @@ public class MainController extends HttpServlet {
   static Logger log = Logger.getLogger(MainController.class);
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
-  public String mainPage(ModelMap modelMap) {
+  public String mainPage(ModelMap model) {
     Student tempStudent = new Student();
-    modelMap.put("tempStudent", tempStudent);
+    tempStudent.setLogin("Проверка передачи логина");
+    model.addAttribute("testMessage", "This is test message!");
+    model.put("tempStudent", tempStudent);
     return "login";
   }
 
@@ -34,7 +30,7 @@ public class MainController extends HttpServlet {
     return "fail";
   }
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+ /* protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     processRequest(request, response);
   }
@@ -51,10 +47,10 @@ public class MainController extends HttpServlet {
     // определение команды, пришедшей из JSP
     String action = request.getParameter("command");
     log.info("controller received parameter: " + action);
-    /*
+    *//*
 		 * вызов реализованного метода execute() и передача параметров
 		 * классу-обработчику конкретной команды
-		 */
+		 *//*
     ActionCommand command;
     switch (action) {
       case "login":
@@ -93,6 +89,6 @@ public class MainController extends HttpServlet {
       response.sendRedirect(request.getContextPath() + page);
       log.error("controller could not found the page");
     }
-  }
+  }*/
 
 }

@@ -1,7 +1,8 @@
+/*
 package by.pvt.aliushkevich.filters;
 
-import by.pvt.aliushkevich.dao.BaseDAO;
 import by.pvt.aliushkevich.enums.ClientType;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+//TODO: Как прописывать фильтр через Спринг?
 @WebFilter(urlPatterns = {"/controller"}, servletNames = {"Controller"})
 public class ServletSecurityFilter implements Filter {
 
@@ -31,10 +33,11 @@ public class ServletSecurityFilter implements Filter {
       }
     }
     chain.doFilter(request, response);
-    BaseDAO.util.closeSession();
+    //BaseDAO.util.closeSession(); TODO: раскомментить после дебага
   }
 
   public void destroy() {
   }
 
 }
+*/

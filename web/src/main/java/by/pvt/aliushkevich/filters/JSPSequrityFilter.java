@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.filters;
+/*package by.pvt.aliushkevich.filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -30,3 +30,4 @@ public class JSPSequrityFilter implements Filter {
 	}
 
 }
+*/
