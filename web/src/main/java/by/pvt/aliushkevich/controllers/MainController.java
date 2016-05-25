@@ -1,6 +1,10 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.pojos.Student;
+import by.pvt.aliushkevich.daoServices.StudentService;
+import by.pvt.aliushkevich.enums.ClientType;
+import by.pvt.aliushkevich.exceptions.DaoException;
+import by.pvt.aliushkevich.logic.LoginLogic;
+import by.pvt.aliushkevich.pojos.Client;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,27 +12,67 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
 
-//@WebServlet("/controller")
 @Controller
-public class MainController extends HttpServlet {
+public class MainController {
   static Logger log = Logger.getLogger(MainController.class);
+  String page;
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
-  public String mainPage(ModelMap model) {
-    Student tempStudent = new Student();
-    tempStudent.setLogin("Проверка передачи логина");
-    model.addAttribute("testMessage", "This is test message!");
-    model.put("tempStudent", tempStudent);
-    return "login";
+  public String mainPage(ModelMap modelMap) {
+    page = "login";
+    log.info("MainController mainPage used...");
+    Client client = new Client();
+    modelMap.put("client", client);
+    log.info("MainController mainPage returned: " + page + ".jsp");
+    return page;
   }
 
   @RequestMapping(value = "/checkLogin", method = RequestMethod.POST)
-  public String checkLogin(ModelMap model, @ModelAttribute Student tempStudent) {
-    log.info("tempStudent= " + tempStudent);
-    return "fail";
+  public String checkLogin(ModelMap modelMap, @ModelAttribute Client client, HttpSession httpSession) {
+    log.info("MainController checkLogin used...");
+    log.info("Processing client: " + client);
+    String login = client.getLogin();
+    String password = client.getPassword();
+    modelMap.addAttribute("user", login.toString());
+    httpSession.setAttribute("login", login);
+    if (LoginLogic.checkLecturerLogin(login, password)) {
+      modelMap.put("userType", ClientType.LECTURER);
+      try {
+        modelMap.put("students", StudentService.getInstance().getLecturerValueStudents(login));
+      } catch (DaoException e) {
+        modelMap.addAttribute("students", "Can not get students..." + e);
+      }
+      page = "lecturer";
+
+    } else if (LoginLogic.checkStudentLogin(login, password)) {
+      modelMap.put("userType", ClientType.STUDENT);
+      page = "student";
+
+    } else {
+      modelMap.addAttribute("errorMessage",
+          "INCORRECT LOGIN OR PASSWORD! (please, try again)");
+      modelMap.put("userType", ClientType.GUEST);
+      page = "login";
+    }
+
+    log.info("MainController checkLogin returned: " + page + ".jsp");
+    return page;
   }
+
+
+  @RequestMapping(value = "/logout", method = RequestMethod.GET)
+  public String logout(ModelMap modelMap) {
+    page = "login";
+    log.info("MainController logout used...");
+    modelMap.clear();
+    Client client = new Client();
+    modelMap.put("client", client);
+    log.info("MainController logout returned: " + page + ".jsp");
+    return page;
+  }
+}
 
  /* protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -48,7 +92,7 @@ public class MainController extends HttpServlet {
     String action = request.getParameter("command");
     log.info("controller received parameter: " + action);
     *//*
-		 * вызов реализованного метода execute() и передача параметров
+     * вызов реализованного метода execute() и передача параметров
 		 * классу-обработчику конкретной команды
 		 *//*
     ActionCommand command;
@@ -91,4 +135,4 @@ public class MainController extends HttpServlet {
     }
   }*/
 
-}
+

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="s" %>
 <html>
 
 <head>
@@ -10,16 +11,24 @@
 	<h3>Welcome, Student!</h3>
 	<hr />${user}, hello!<br />
 	<b>Choose a course, you'd like to learn </b><br />
-	(You have ${sessionLifetime} seconds to do it)
-	
-	 <form name="chooseCourseForm" method="POST" action="controller">
-   <input type="hidden" name="command" value="chooseLearningCourse" />
-   <p><b>Your choice:</b></p>
-    <p><input name="choise" type="radio" value="1" checked="checked"> Mathematics</p>
-    <p><input name="choise" type="radio" value="2"> Physics</p>
-    <p><input name="choise" type="radio" value="3"> English</p>
+	<%--(You have ${sessionLifetime} seconds to do it)--%>
+
+ <%-- <form name="chooseCourseForm" method="POST" action="controller">
+    <input type="hidden" name="command" value="chooseLearningCourse" />
+    <p><b>Your choice:</b></p>
+    <p><input name="choice" type="radio" value="1" checked="checked"> Mathematics</p>
+    <p><input name="choice" type="radio" value="2"> Physics</p>
+    <p><input name="choice" type="radio" value="3"> English</p>
     <p><input type="submit" value="I understand, what I'm doing"></p>
-  </form> 		
+  </form>--%>
+
+	 <s:form method="post" modelAttribute="client" action="chooseLearningCourse">
+   <p><b>Your choice:</b></p>
+    <p><s:radiobutton path="choice" value="1" checked="checked"/> Mathematics</p>
+    <p><s:radiobutton path="choice" value="2"/> Physics</p>
+    <p><s:radiobutton path="choice" value="3"/> English</p>
+    <p><input type="submit" value="I understand, what I'm doing"></p>
+    </s:form>
   
   <button onclick="goBack()">Go Back</button> <br />
 <script>
@@ -29,7 +38,8 @@ function goBack() {
 </script>
 	
 	<br /> Debug info - session = ${sessionScope}	
-	<a href="controller?command=logout">Logout</a>
+	<%--<a href="controller?command=logout">Logout</a>--%>
+  <a href="logout">Logout</a>
 </body>
 
 </html>

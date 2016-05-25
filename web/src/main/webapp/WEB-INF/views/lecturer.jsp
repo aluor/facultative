@@ -23,7 +23,7 @@
 <hr/>
 ${user}, hello!<br/>
 <b> You can give a mark and add a feedback to a student: </b><br/>
-(You have ${sessionLifetime} seconds to do it) <br/><br/>
+<%--(You have ${sessionLifetime} seconds to do it) <br/><br/>--%>
 
 <table style="width:90%">
   <tr>

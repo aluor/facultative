@@ -15,7 +15,7 @@ the student. <br/> <br/>
 Please, enter your data first to login (or click
 <a href="controller?command=studentRegisterPage">here</a> to register,
 as a new student) <br/>
-Test message:${testMessage} ${tempStudent.login}
+<%--Test message:${testMessage} ${client.login}--%>
 <b> ${errorMessage} </b>
 <br/>
 <%--<form name="loginForm" method="POST" action="controller">
@@ -25,7 +25,7 @@ Test message:${testMessage} ${tempStudent.login}
   <input type="submit" value="Log in" />
 </form>--%>
 
-<s:form method="post" modelAttribute="tempStudent" action="checkLogin">
+<s:form method="post" modelAttribute="client" action="checkLogin">
   <fieldset>
     <label for="login">Login:</label>
     <s:input path="login"/> <br/>
