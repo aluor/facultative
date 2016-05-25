@@ -40,7 +40,7 @@ public class LecturerService extends BaseService<Lecturer> {
   }
 
   public void addMarkFeedback(int mark, String feedback, int studentId, int courseId) throws DaoException {
-    log.info("trying addMarkFeedback to student...");
+    log.info("Trying addMarkFeedback to student...");
     try {
       util = HibernateUtil.getHibernateUtil();
       Session session = util.getSession();
@@ -62,12 +62,12 @@ public class LecturerService extends BaseService<Lecturer> {
   }
 
   public List<Lecturer> getLecturers() {
-    log.info("trying getLecturers...");
+    log.info("Trying getLecturers...");
     return lecturerDAO.getLecturers();
   }
 
   public int getCourseIdByLogin(String login) throws DaoException {
-    log.info("trying getCourseIdByLogin...");
+    log.info("Trying getCourseIdByLogin...");
     return lecturerDAO.getCourseIdByLogin(login);
   }
 

@@ -9,9 +9,8 @@
 
 <body>
 	<h3>Welcome, Student!</h3>
-	<hr />${user}, hello!<br />
+	<hr />${client.login}, hello!<br />
 	<b>Choose a course, you'd like to learn </b><br />
-	<%--(You have ${sessionLifetime} seconds to do it)--%>
 
  <%-- <form name="chooseCourseForm" method="POST" action="controller">
     <input type="hidden" name="command" value="chooseLearningCourse" />
@@ -37,8 +36,7 @@ function goBack() {
 }
 </script>
 	
-	<br /> Debug info - session = ${sessionScope}	
-	<%--<a href="controller?command=logout">Logout</a>--%>
+	<br /> Debug info - session = ${sessionScope}
   <a href="logout">Logout</a>
 </body>
 

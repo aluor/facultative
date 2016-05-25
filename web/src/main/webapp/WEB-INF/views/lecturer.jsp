@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="s" %>
 <html>
 
 <head>
@@ -21,9 +22,8 @@
 <body>
 <h3>Welcome, Lecturer!</h3>
 <hr/>
-${user}, hello!<br/>
+${client.login}, hello!<br/>
 <b> You can give a mark and add a feedback to a student: </b><br/>
-<%--(You have ${sessionLifetime} seconds to do it) <br/><br/>--%>
 
 <table style="width:90%">
   <tr>
@@ -46,7 +46,7 @@ ${user}, hello!<br/>
 </table>
 <br/>
 
-<form name="addMarkFeedbackForm" method="POST" action="controller">
+<%--<form name="addMarkFeedbackForm" method="POST" action="controller">
   <input type="hidden" name="command" value="addMarkFeedback"/>
   <b>Student ID*</b> <br/>
   <input type="text" name="studentId" value=""/> <br/> <br/>
@@ -58,7 +58,20 @@ ${user}, hello!<br/>
   <b>Feedback* </b><br/>
   <input type="text" name="feedback" value=""/> <br/>
   <input type="submit" value="That's my decision!"/>
-</form>
+</form>--%>
+
+  <s:form method="post" modelAttribute="client" action="addMarkFeedback">
+  <b><label for="id">Student ID*</label></b> <br/>
+  <s:input path="id" type="text" value="" placeholder="Enter student id" required="required"/> <br/> <br/>
+  <b> Mark* </b><br/>
+  <p><s:radiobutton path="mark" value="2"/> 2 </p>
+  <p><s:radiobutton path="mark" value="3"/> 3 </p>
+  <p><s:radiobutton path="mark" value="4"/> 4 </p>
+  <p><s:radiobutton path="mark" value="5"/> 5 </p>
+  <b><label for="feedback">Feedback*</label></b><br/>
+    <s:input path="feedback" type="text" value="" placeholder="Enter feedback" required="required"/> <br/>
+  <input type="submit" value="That's my decision!"/>
+</s:form>
 
 <button onclick="goBack()">Go Back</button>
 <br/>
@@ -70,7 +83,7 @@ ${user}, hello!<br/>
 
 (* - required)<br/><br/>
 Debug info - session = ${sessionScope}
-<a href="controller?command=logout">Logout</a>
+<a href="logout">Logout</a>
 </body>
 
 </html>

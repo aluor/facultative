@@ -25,7 +25,7 @@ function goBack() {
 </script> <br /> 
 		
 	Debug info - session = ${sessionScope}
-	<a href="controller?command=logout"> <b>Logout</b></a>
+	<a href="logout"> <b>Logout</b></a>
 	</div>
 </body>
 

@@ -29,7 +29,7 @@
   }
 </script>
 (* - required)<br/><br/>
-<br/>Debug info - session = ${sessionScope} <a href="controller?command=logout">Logout</a> <br/>
+<br/>Debug info - session = ${sessionScope} <a href="logout">Logout</a> <br/>
 (You can see log info also in D:\facultative.log) <br/>
 </body>
 </html>

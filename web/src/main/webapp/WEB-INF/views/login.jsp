@@ -26,13 +26,13 @@ as a new student) <br/>
 </form>--%>
 
 <s:form method="post" modelAttribute="client" action="checkLogin">
-  <fieldset>
+
     <label for="login">Login:</label>
-    <s:input path="login"/> <br/>
-    <label for="password">Password:</label>
-    <s:input path="password"/> <br/> <br/>
+    <s:input path="login" placeholder="Enter login" required="required"/> <br/>
+    <label for="password" >Password:</label>
+    <s:input path="password" placeholder="Enter password" required="required"/> <br/> <br/>
     <input type="submit" value="Log in"/>
-  </fieldset>
+
 </s:form>
 
 <b>where: </b>

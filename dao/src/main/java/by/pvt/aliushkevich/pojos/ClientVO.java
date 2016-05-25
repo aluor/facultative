@@ -1,15 +1,19 @@
 package by.pvt.aliushkevich.pojos;
 
-public class LecturerValueStudent {
+import by.pvt.aliushkevich.enums.ClientType;
+
+public class ClientVO {
   private int id;
   private String firstName;
   private String lastName;
   private String login;
   private String password;
+  private int choice;
   private int mark;
   private String feedback;
+  private ClientType clientType = ClientType.GUEST;
 
-  public LecturerValueStudent() {
+  public ClientVO() {
   }
 
   public int getId() {
@@ -20,7 +24,6 @@ public class LecturerValueStudent {
     this.id = id;
   }
 
-
   public String getFirstName() {
     return firstName;
   }
@@ -28,7 +31,6 @@ public class LecturerValueStudent {
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
-
 
   public String getLastName() {
     return lastName;
@@ -38,7 +40,6 @@ public class LecturerValueStudent {
     this.lastName = lastName;
   }
 
-
   public String getLogin() {
     return login;
   }
@@ -47,13 +48,20 @@ public class LecturerValueStudent {
     this.login = login;
   }
 
-
   public String getPassword() {
     return password;
   }
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public int getChoice() {
+    return choice;
+  }
+
+  public void setChoice(int choice) {
+    this.choice = choice;
   }
 
   public int getMark() {
@@ -72,9 +80,19 @@ public class LecturerValueStudent {
     this.feedback = feedback;
   }
 
+  public ClientType getClientType() {
+    return clientType;
+  }
+
+  public void setClientType(ClientType clientType) {
+    this.clientType = clientType;
+  }
+
   @Override
   public String toString() {
-    return "Student ID " + id + ": " + firstName + " " + lastName + " (login: " + login + ")\n" + "mark: " +mark + "feedback: " +feedback;
+    return "{id="+id+" firstName="+firstName+" lastName="+lastName+
+        " login="+login+" password="+password+" choice="+choice+
+        " mark="+mark+" feedback="+feedback+" clientType="+clientType+"}";
   }
 }
 
