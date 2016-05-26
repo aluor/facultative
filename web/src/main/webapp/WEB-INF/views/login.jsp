@@ -13,7 +13,7 @@ If you are our student, you can sign up for a course on next page. <br/>
 If you are our lecturer, you can add a mark and a feedback to
 the student. <br/> <br/>
 Please, enter your data first to login (or click
-<a href="controller?command=studentRegisterPage">here</a> to register,
+<a href="studentRegisterPage">here</a> to register,
 as a new student) <br/>
 <%--Test message:${testMessage} ${client.login}--%>
 <b> ${errorMessage} </b>
