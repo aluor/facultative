@@ -1,14 +1,16 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoServices.LecturerService;
+import by.pvt.aliushkevich.daoservices.ILecturerService;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.ClientVO;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -20,6 +22,9 @@ public class LecturerController {
   int mark;
   String feedback;
 
+  @Autowired
+  private ILecturerService lecturerService;
+
   @RequestMapping(value = "/addMarkFeedback", method = RequestMethod.POST)
   public String addMarkFeedback(ModelMap modelMap, @ModelAttribute ClientVO client, HttpSession httpSession) {
     log.info("LecturerController addMarkFeedback used...");
@@ -28,14 +33,11 @@ public class LecturerController {
     try {
       String login = (String) httpSession.getAttribute("login");
       try {
-        courseId = LecturerService.getInstance().getCourseIdByLogin(login);
+        courseId = lecturerService.getCourseIdByLogin(login);
       } catch (DaoException e) {
         log.error("Error getCourseIdByLogin");
         modelMap.addAttribute("errorMessage", "Can not getCourseIdByLogin");
       }
-//        studentId = Integer.parseInt(request.getParameter("studentId"));
-//        mark = Integer.parseInt(request.getParameter("mark"));
-
       studentId = client.getId();
       mark = client.getMark();
     } catch (Exception e) {
@@ -51,7 +53,7 @@ public class LecturerController {
       page = "fail";
     } else {
       try {
-        LecturerService.getInstance().addMarkFeedback(mark, feedback, studentId, courseId);
+        lecturerService.addMarkFeedback(mark, feedback, studentId, courseId);
         page = "success";
       } catch (DaoException e) {
         log.error("Error addLearningCourse to student " + e);

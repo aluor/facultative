@@ -1,11 +1,12 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoServices.StudentService;
+import by.pvt.aliushkevich.daoservices.IStudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
-import by.pvt.aliushkevich.logic.LoginLogic;
+import by.pvt.aliushkevich.logic.ILoginLogic;
 import by.pvt.aliushkevich.pojos.ClientVO;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +19,12 @@ import javax.servlet.http.HttpSession;
 public class MainController {
   static Logger log = Logger.getLogger(MainController.class);
   String page;
+
+  @Autowired
+  private IStudentService studentService;
+
+  @Autowired
+  private ILoginLogic loginLogic;
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String mainPage(ModelMap modelMap) {
@@ -37,16 +44,16 @@ public class MainController {
     String password = client.getPassword();
     modelMap.put("client", client);
     httpSession.setAttribute("login", login);
-    if (LoginLogic.checkLecturerLogin(login, password)) {
+    if (loginLogic.checkLecturerLogin(login, password)) {
       httpSession.setAttribute("userType", ClientType.LECTURER);
       try {
-        modelMap.put("students", StudentService.getInstance().getLecturerValueStudents(login));
+        modelMap.put("students", studentService.getLecturerValueStudents(login));
       } catch (DaoException e) {
         modelMap.addAttribute("students", "Can not get students..." + e);
       }
       page = "lecturer";
 
-    } else if (LoginLogic.checkStudentLogin(login, password)) {
+    } else if (loginLogic.checkStudentLogin(login, password)) {
       httpSession.setAttribute("userType", ClientType.STUDENT);
       page = "student";
 
@@ -73,67 +80,6 @@ public class MainController {
     log.info("MainController logout returned: " + page + ".jsp");
     return page;
   }
+
+  //TODO: нужно ли будет где-то закрывать сессию или она 1 на транзакцию в нашем случае?
 }
-
- /* protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    processRequest(request, response);
-  }
-
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    processRequest(request, response);
-  }
-
-  private void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    log.info("controller used...");
-    String page;
-    // определение команды, пришедшей из JSP
-    String action = request.getParameter("command");
-    log.info("controller received parameter: " + action);
-    *//*
-     * вызов реализованного метода execute() и передача параметров
-		 * классу-обработчику конкретной команды
-		 *//*
-    ActionCommand command;
-    switch (action) {
-      case "login":
-        command = new LoginCommand();
-        break;
-      case "logout":
-        command = new LogoutCommand();
-        break;
-      case "chooseLearningCourse":
-        command = new AddLearningCourseCommand();
-        break;
-      case "addMarkFeedback":
-        command = new AddMarkFeedbackCommand();
-        break;
-      case "studentRegisterPage":
-        command = new StudentRegisterPageCommand();
-        break;
-      case "studentRegister":
-        command = new StudentRegisterCommand();
-        break;
-      default:
-        command = new EmptyCommand();
-        break;
-    }
-
-    page = command.execute(request);
-    if (page != null) {
-      RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-      // вызов страницы ответа на запрос
-      dispatcher.forward(request, response);
-      log.info("controller forward client to: " + page);
-    } else {
-      // установка страницы c сообщением об ошибке
-      page = "/jsp/login.jsp";
-      request.getSession().setAttribute("nullPage", "Page not found. Business logic error");
-      response.sendRedirect(request.getContextPath() + page);
-      log.error("controller could not found the page");
-    }
-  }*/
-
-

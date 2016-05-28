@@ -2,25 +2,25 @@ package by.pvt.aliushkevich.dao;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Relation;
-import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by Rabotnik on 06.05.2016.
  */
-public class RelationDAO extends BaseDAO<Relation> {
+@Repository("relationDAO")
+public class RelationDAO extends BaseDAO<Relation> implements IRelationDAO{
 
-  private static Logger log = Logger.getLogger(LecturerDAO.class);
+  private static Logger log = Logger.getLogger(RelationDAO.class);
 
   public int getRelationId(int studentId, int lecturerId) throws DaoException {
     log.info("Trying getRelation...");
     Integer relationId;
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+      Session session = getSession();
       String hql = "SELECT R.id FROM Relation as R WHERE R.student.id = "+ studentId+" and R.lecturer.id = "+lecturerId;
       Query query = session.createQuery(hql);
       relationId = (Integer) query.uniqueResult();
@@ -36,8 +36,7 @@ public class RelationDAO extends BaseDAO<Relation> {
     log.info("Trying getMark...");
     Integer mark;
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+      Session session = getSession();
       String hql = "SELECT R.mark FROM Relation as R WHERE R.student.id = "+studentId+" and R.lecturer.id = "+lecturerId;
       Query query = session.createQuery(hql);
       mark = (Integer) query.uniqueResult();
@@ -53,8 +52,7 @@ public class RelationDAO extends BaseDAO<Relation> {
     log.info("Trying getFeedback...");
     String feedback;
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+      Session session = getSession();
       String hql = "SELECT R.feedback FROM Relation as R WHERE R.student.id = "+studentId+" and R.lecturer.id = "+lecturerId;
       Query query = session.createQuery(hql);
       feedback = (String) query.uniqueResult();

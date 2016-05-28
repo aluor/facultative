@@ -1,9 +1,7 @@
 package by.pvt.aliushkevich.filters;
 
-import by.pvt.aliushkevich.dao.BaseDAO;
 import by.pvt.aliushkevich.enums.ClientType;
 import org.apache.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +27,8 @@ public class ServletSecurityFilter implements Filter {
       session.setAttribute("userType", type);
     }
     chain.doFilter(request, response);
-    BaseDAO.util.closeSession();
-    log.info("Hibernate session closed!");
+//    BaseDAO.util.closeSession();
+//    log.info("Hibernate session closed!");
   }
 
   public void destroy() {

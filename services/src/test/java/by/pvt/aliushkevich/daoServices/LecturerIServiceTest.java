@@ -1,3 +1,4 @@
+/*
 package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.LecturerDAO;
@@ -19,12 +20,10 @@ import java.util.List;
 import static by.pvt.aliushkevich.dao.BaseDAO.util;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Rabotnik on 10.05.2016.
- */
-public class LecturerServiceTest {
 
-  private static Logger log = Logger.getLogger(LecturerServiceTest.class);
+public class LecturerIServiceTest {
+
+  private static Logger log = Logger.getLogger(LecturerIServiceTest.class);
   private LecturerDAO lecturerDAO = new LecturerDAO();
   private StudentDAO studentDAO = new StudentDAO();
   private RelationDAO relationDAO = new RelationDAO();
@@ -120,3 +119,4 @@ public class LecturerServiceTest {
     util.closeSession();
   }
 }
+*/

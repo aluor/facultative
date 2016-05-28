@@ -1,11 +1,12 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoServices.StudentService;
+import by.pvt.aliushkevich.daoservices.IStudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.ClientVO;
 import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,9 @@ public class StudentController {
   static Logger log = Logger.getLogger(StudentController.class);
   String page;
 
+  @Autowired
+  private IStudentService studentService;
+
   @RequestMapping(value = "/chooseLearningCourse", method = RequestMethod.POST)
   public String chooseLearningCourse(ModelMap modelMap, @ModelAttribute ClientVO client, HttpSession httpSession) {
     log.info("StudentController chooseLearningCourse used...");
@@ -29,7 +33,7 @@ public class StudentController {
     String login = (String) httpSession.getAttribute("login");
     int choice = client.getChoice();
     try {
-      StudentService.getInstance().addLearningCourse(login, choice);
+      studentService.addLearningCourse(login, choice);
     } catch (DaoException e) {
       log.info("Incorrect input: You have already signed on that course or this course is not available now");
       modelMap.addAttribute("errorMessage", "Incorrect input: You have already signed on that course or this course is not available now");
@@ -63,7 +67,7 @@ public class StudentController {
     student.setPassword(client.getPassword());
     if (student.getFirstName() != "" && student.getLastName() != "" && student.getLogin() != "" && student.getPassword() != "") {
       try {
-        StudentService.getInstance().addClient(student);
+        studentService.addClient(student);
       } catch (DaoException e) {
         log.info("Incorrect input: Try to input another data");
         modelMap.addAttribute("errorMessage", "Incorrect input: Try to input another data");

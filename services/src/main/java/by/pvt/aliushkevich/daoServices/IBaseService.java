@@ -1,11 +1,11 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
 
 /**
- * Created by Rabotnik on 01.05.2016.
+ * Created by Rabotnik on 28.05.2016.
  */
-public interface Service<T> {
+public interface IBaseService<T> {
   void addClient(T client) throws DaoException;
   void deleteClient(T client) throws DaoException;
 }

@@ -1,3 +1,4 @@
+/*
 package by.pvt.aliushkevich.dao;
 
 import by.pvt.aliushkevich.pojos.Student;
@@ -15,9 +16,7 @@ import static by.pvt.aliushkevich.dao.BaseDAO.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-/**
- * Created by Rabotnik on 13.04.2016.
- */
+
 public class StudentDAOTest {
 
   private static Logger log = Logger.getLogger(LecturerDAOTest.class);
@@ -103,3 +102,4 @@ public class StudentDAOTest {
   }
 
 }
+*/

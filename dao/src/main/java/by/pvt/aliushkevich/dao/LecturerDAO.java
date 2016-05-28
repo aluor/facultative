@@ -2,14 +2,16 @@ package by.pvt.aliushkevich.dao;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Lecturer;
-import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public class LecturerDAO extends BaseDAO<Lecturer> {
+@Repository("lecturerDAO")
+public class LecturerDAO extends BaseDAO<Lecturer> implements ILecturerDAO{
 
   private static Logger log = Logger.getLogger(LecturerDAO.class);
 
@@ -17,8 +19,7 @@ public class LecturerDAO extends BaseDAO<Lecturer> {
     Lecturer lecturer;
     log.info("Trying getLecturerByLogin "+login+"...");
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+      Session session = getSession();
       String hql = "SELECT L.id FROM Lecturer as L WHERE L.login =\'" + login + "\'";
       Query query = session.createQuery(hql);
       Integer lecturerId = (Integer) query.uniqueResult();
@@ -35,8 +36,7 @@ public class LecturerDAO extends BaseDAO<Lecturer> {
     log.info("Trying getCourseIdByLogin "+login+":...");
     Integer courseId;
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+      Session session = getSession();
       String hql = "SELECT L.courseId FROM Lecturer as L WHERE L.login =\'" + login + "\'";
       Query query = session.createQuery(hql);
       courseId = (Integer) query.uniqueResult();
@@ -52,8 +52,7 @@ public class LecturerDAO extends BaseDAO<Lecturer> {
     Lecturer lecturer = null;
     log.info("trying getLecturerByCourseId:" + courseId + "...");
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+      Session session = getSession();
       String hql = "SELECT L.id FROM Lecturer as L WHERE L.courseId = " + courseId;
       Query query = session.createQuery(hql);
       Integer lecturerId = (Integer) query.uniqueResult();
@@ -72,8 +71,8 @@ public class LecturerDAO extends BaseDAO<Lecturer> {
     List<Lecturer> lecturers = null;
     log.info("Trying getLecturers...");
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
+
+      Session session = getSession();
       String hql = "FROM Lecturer";
       Query query = session.createQuery(hql);
       lecturers = query.list();

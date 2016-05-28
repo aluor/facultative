@@ -1,19 +1,28 @@
 package by.pvt.aliushkevich.logic;
 
-import by.pvt.aliushkevich.daoServices.LecturerService;
-import by.pvt.aliushkevich.daoServices.StudentService;
+import by.pvt.aliushkevich.daoservices.ILecturerService;
+import by.pvt.aliushkevich.daoservices.IStudentService;
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class LoginLogic {
+@Service("loginLogic")
+public class LoginLogic implements ILoginLogic{
   static Logger log = Logger.getLogger(LoginLogic.class);
 
-  public static boolean checkLecturerLogin(String enterLogin, String enterPass) {
+  @Autowired
+  private ILecturerService lecturerService;
+  @Autowired
+  private IStudentService studentService;
+
+
+  public boolean checkLecturerLogin(String enterLogin, String enterPass) {
     boolean check = false;
-    List<Lecturer> lecturers = LecturerService.getInstance().getLecturers();
+    List<Lecturer> lecturers = lecturerService.getLecturers();
     for (Lecturer lecturer : lecturers) {
       if (lecturer.getLogin().equals(enterLogin) && lecturer.getPassword().equals(enterPass)) {
         check = true;
@@ -24,9 +33,9 @@ public class LoginLogic {
     return check;
   }
 
-  public static boolean checkStudentLogin(String enterLogin, String enterPass) {
+  public boolean checkStudentLogin(String enterLogin, String enterPass) {
     boolean check = false;
-    List<Student> students = StudentService.getInstance().getStudents();
+    List<Student> students = studentService.getStudents();
     for (Student student : students) {
       if (student.getLogin().equals(enterLogin) && student.getPassword().equals(enterPass)) {
         check = true;

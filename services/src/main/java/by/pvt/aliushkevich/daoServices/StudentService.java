@@ -1,18 +1,18 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
-import by.pvt.aliushkevich.dao.LecturerDAO;
-import by.pvt.aliushkevich.dao.RelationDAO;
-import by.pvt.aliushkevich.dao.StudentDAO;
+import by.pvt.aliushkevich.dao.ILecturerDAO;
+import by.pvt.aliushkevich.dao.IRelationDAO;
+import by.pvt.aliushkevich.dao.IStudentDAO;
 import by.pvt.aliushkevich.exceptions.DaoException;
-import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.ClientVO;
+import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Relation;
 import by.pvt.aliushkevich.pojos.Student;
-import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,36 +21,21 @@ import java.util.Set;
 /**
  * Created by Rabotnik on 10.04.2016.
  */
-public class StudentService extends BaseService<Student> {
-  private StudentDAO studentDAO;
-  private LecturerDAO lecturerDAO;
-  private RelationDAO relationDAO;
-  private static StudentService studentService;
-  private Transaction transaction;
+@Service("studentService")
+@Transactional
+public class StudentService extends BaseService<Student> implements IStudentService{
+
   private static Logger log = Logger.getLogger(StudentService.class);
-
-  private StudentService() {
-    super();
-    studentDAO = new StudentDAO();
-    lecturerDAO = new LecturerDAO();
-    relationDAO = new RelationDAO();
-  }
-
-  public static StudentService getInstance() {
-    if (studentService == null) {
-      studentService = new StudentService();
-      return studentService;
-    } else {
-      return studentService;
-    }
-  }
+  @Autowired
+  private IStudentDAO studentDAO;
+  @Autowired
+  private ILecturerDAO lecturerDAO;
+  @Autowired
+  private IRelationDAO relationDAO;
 
   public void addLearningCourse(String login, int courseId) throws DaoException {
     log.info("Trying addLearningCourse...");
     try {
-      util = HibernateUtil.getHibernateUtil();
-      Session session = util.getSession();
-      transaction = session.beginTransaction();
       Student student = studentDAO.getStudentByLogin(login);
       Lecturer lecturer = lecturerDAO.getLecturerByCourseId(courseId);
 
@@ -68,8 +53,6 @@ public class StudentService extends BaseService<Student> {
         student.getRelations().add(relation);
         lecturer.getRelations().add(relation);
         studentDAO.saveOrUpdate(student);
-        log.info("addLearningCourse(saveOrUpdate student):" + student);
-        transaction.commit();
         log.info("addLearningCourse(commit): SUCCESS");
       } else {
         Exception e = null;
@@ -77,7 +60,6 @@ public class StudentService extends BaseService<Student> {
       }
     } catch (HibernateException e) {
       log.error("Error addLearningCourse to student" + e);
-      transaction.rollback();
       throw new DaoException(e);
     }
   }
@@ -86,8 +68,8 @@ public class StudentService extends BaseService<Student> {
     log.info("Trying getLecturerValueStudents...");
     Set<ClientVO> clientVOs = new HashSet<>();
     Lecturer lecturer = lecturerDAO.getLecturerByLogin(lecturerLogin);
-    Set<Student> students= studentDAO.getLecturerStudents(lecturerLogin);
-    for (Student student: students){
+    Set<Student> students = studentDAO.getLecturerStudents(lecturerLogin);
+    for (Student student : students) {
       ClientVO clientVO = new ClientVO();
       clientVO.setId(student.getId());
       clientVO.setFirstName(student.getFirstName());
