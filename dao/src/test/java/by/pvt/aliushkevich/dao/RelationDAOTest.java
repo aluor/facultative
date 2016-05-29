@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Created by Rabotnik on 29.05.2016.
  */
@@ -45,16 +47,20 @@ public class RelationDAOTest {
   }
 
   @Test
-  public void getRelationId() throws Exception {
-    log.info("testing getRelationId...");
+  public void getRelationInfo() throws Exception {
+    log.info("testing getRelationInfo...");
     Lecturer expectedLecturer = lecturerDAO.getLecturerByLogin(testLecturer.getLogin());
     int expectedLecturerId = expectedLecturer.getId();
     Student expectedStudent = studentDAO.getStudentByLogin(testStudent.getLogin());
     int expectedStudentId = expectedStudent.getId();
-    int relationId = relationDAO.getRelationId(expectedStudentId, expectedLecturerId);
+    int expectedRelationId = relationDAO.getRelationId(expectedStudentId, expectedLecturerId);
+    assertNotNull("getRelationId: FAIL (No relation id!)", expectedRelationId);
     int expectedMark = relationDAO.getMark(expectedStudentId, expectedLecturerId);
+    assertNotNull("getMark: FAIL", expectedMark);
     String expectedFeedback = relationDAO.getFeedback(expectedStudentId, expectedLecturerId);
-    log.info("getRelationId: SUCCESS (relationId=" + relationId + " mark=" + expectedMark + " feedback=" + expectedFeedback);
+    assertNotNull("getFeedback: FAIL", expectedFeedback);
+    log.info("getRelationId: SUCCESS (relationId=" + expectedRelationId + " mark=" + expectedMark + " feedback=" + expectedFeedback);
+
   }
 
 //  No need @After because of @TransactionConfiguration(defaultRollback = true)
