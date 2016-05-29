@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.pojos;
+package by.pvt.aliushkevich.valueObjects;
 
 import by.pvt.aliushkevich.enums.ClientType;
 

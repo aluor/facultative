@@ -1,10 +1,10 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoservices.IStudentService;
+import by.pvt.aliushkevich.daoServices.IStudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.logic.ILoginLogic;
-import by.pvt.aliushkevich.pojos.ClientVO;
+import by.pvt.aliushkevich.valueObjects.ClientVO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

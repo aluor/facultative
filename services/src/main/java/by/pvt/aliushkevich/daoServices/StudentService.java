@@ -1,10 +1,10 @@
-package by.pvt.aliushkevich.daoservices;
+package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.ILecturerDAO;
 import by.pvt.aliushkevich.dao.IRelationDAO;
 import by.pvt.aliushkevich.dao.IStudentDAO;
 import by.pvt.aliushkevich.exceptions.DaoException;
-import by.pvt.aliushkevich.pojos.ClientVO;
+import by.pvt.aliushkevich.valueObjects.ClientVO;
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Relation;
 import by.pvt.aliushkevich.pojos.Student;

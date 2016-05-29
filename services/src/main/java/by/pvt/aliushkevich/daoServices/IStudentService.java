@@ -1,7 +1,7 @@
-package by.pvt.aliushkevich.daoservices;
+package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
-import by.pvt.aliushkevich.pojos.ClientVO;
+import by.pvt.aliushkevich.valueObjects.ClientVO;
 import by.pvt.aliushkevich.pojos.Student;
 
 import java.util.List;

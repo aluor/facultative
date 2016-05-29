@@ -1,105 +1,84 @@
-/*
+
 package by.pvt.aliushkevich.dao;
 
+import by.pvt.aliushkevich.configuration.HibernateConfiguration;
+import by.pvt.aliushkevich.dao.initialialization.InitEntity;
+import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Student;
-import by.pvt.aliushkevich.util.HibernateUtil;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
-import static by.pvt.aliushkevich.dao.BaseDAO.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = HibernateConfiguration.class)
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
 public class StudentDAOTest {
-
-  private static Logger log = Logger.getLogger(LecturerDAOTest.class);
-  private Transaction transaction;
-  private LecturerDAO lecturerDAO = new LecturerDAO();
-  private StudentDAO studentDAO = new StudentDAO();
+  private static Logger log = Logger.getLogger(StudentDAOTest.class);
+  @Autowired
+  private ILecturerDAO lecturerDAO;
+  @Autowired
+  private IStudentDAO studentDAO;
   private Student testStudent = new Student();
-  private String testFirstName = "testFirstName";
-  private String testLastName = "testLastName";
-  private String testLogin = "testLogin";
-  private String testPassword = "testPassword";
+  private Lecturer testLecturer = new Lecturer();
 
   @Before
   public void setUp() throws Exception {
-    log.info("trying setUp testLecturer...");
-    testStudent.setFirstName(testFirstName);
-    testStudent.setLastName(testLastName);
-    testStudent.setLogin(testLogin);
-    testStudent.setPassword(testPassword);
-    util = HibernateUtil.getHibernateUtil();
-    Session session = util.getSession();
-    transaction = session.beginTransaction();
-    session.saveOrUpdate(testStudent);
-    transaction.commit();
-    log.info("setUp testStudent (commit): SUCCESS");
-    util.closeSession();
-    log.info("session closed");
+    log.info("trying setUp testStudent...");
+    InitEntity.initStudent(testStudent);
+    studentDAO.saveOrUpdate(testStudent);
+    log.info("setUp testStudent: SUCCESS");
   }
 
   @Test
   public void getStudentByLogin() throws Exception {
     log.info("testing getStudentByLogin... (testStudent=" + testStudent + ")");
-    Student expectedStudent = studentDAO.getStudentByLogin(testLogin);
-    log.info("(get expectedStudent:=" + expectedStudent + ")");
-    assertEquals("getLecturerByLogin failed: testLecturer mismatch expectedLecturer", testStudent.getLogin(), expectedStudent.getLogin());
+    Student expectedStudent = studentDAO.getStudentByLogin(testStudent.getLogin());
+    log.info("(get expectedStudent: " + expectedStudent + ")");
+    assertEquals("getStudentByLogin failed: testStudent mismatch expectedStudent", testStudent.getLogin(), expectedStudent.getLogin());
     log.info("getStudentByLogin: SUCCESS");
-    util.closeSession();
   }
 
   @Test
   public void getStudents() throws Exception {
     List<Student> expectedStudents = studentDAO.getStudents();
     assertFalse("getStudents failed:", expectedStudents.isEmpty());
-    log.info("getLecturers (" + expectedStudents.size() + " person): SUCCESS");
-    util.closeSession();
+    log.info("getStudents (" + expectedStudents.size() + " person): SUCCESS");
   }
 
   @Test
   public void getLecturerStudents() throws Exception {
-//    util = HibernateUtil.getHibernateUtil();
-//    Session session = util.getSession();
-//    transaction = session.beginTransaction();
-//
-//    Lecturer testLecturer = new Lecturer();
-//    testLecturer.setLogin(testLogin);
-//    Set<Relation> testRelations = new HashSet<>();
-//    Relation testRelation = new Relation();
-//
-//    testRelation.setStudent(testStudent);
-//    testRelations.add(testRelation);
-//    testLecturer.setRelations(testRelations);
-//
-//    studentDAO.saveOrUpdate(testStudent);
-//    lecturerDAO.saveOrUpdate(testLecturer);
-//    transaction.commit();
-//    session.clear();
-//    Set<Student> expectedLecturerStudents = studentDAO.getLecturerStudents(testLogin);
-//    assertFalse("getLecturerStudents failed:", expectedLecturerStudents.isEmpty());
-//    log.info("getLecturerStudents (" + expectedLecturerStudents.size() + " person): SUCCESS");
-//    util.closeSession();
+    log.info("testing getLecturerStudents...");
+    InitEntity.initLecturer(testLecturer);
+    lecturerDAO.saveOrUpdate(testLecturer);
+    InitEntity.initRelations(testLecturer,testStudent);
+    lecturerDAO.saveOrUpdate(testLecturer);
+    Set<Student> expectedLecturerStudents = studentDAO.getLecturerStudents(testLecturer.getLogin());
+    log.info("getLecturerStudents (" + expectedLecturerStudents);
+    assertFalse("getLecturerStudents failed:", expectedLecturerStudents.isEmpty());
+    log.info("getLecturerStudents (" + expectedLecturerStudents.size() + " person): SUCCESS");
+    lecturerDAO.delete(testLecturer);
   }
 
-  @After
-  public void tearDown() throws Exception {
-    log.info("Trying delete testStudent...");
-    util = HibernateUtil.getHibernateUtil();
-    Session session = util.getSession();
-    transaction = session.beginTransaction();
-    session.delete(testStudent);
-    transaction.commit();
-    log.info("Delete testStudent: SUCCESS");
-    util.closeSession();
-  }
+//  No need any more because of: @TransactionConfiguration(defaultRollback = true)
+//  @After
+//  public void tearDown() throws Exception {
+//    log.info("Trying delete testStudent...");
+//    studentDAO.delete(testStudent);
+//    log.info("Delete testStudent: SUCCESS");
+//  }
 
 }
-*/

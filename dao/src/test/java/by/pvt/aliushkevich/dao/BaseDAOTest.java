@@ -1,60 +1,41 @@
 package by.pvt.aliushkevich.dao;
 
+import by.pvt.aliushkevich.configuration.HibernateConfiguration;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Created by Rabotnik on 27.05.2016.
  */
-//TODO: Как задавать конфиг контекста для тестов при анотациях?
-
-@ContextConfiguration("/testSpringContext.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-//@Transactional
+@ContextConfiguration(classes = HibernateConfiguration.class)
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
 public class BaseDAOTest {
   private static Logger log = Logger.getLogger(BaseDAO.class);
-  private ApplicationContext context = new ClassPathXmlApplicationContext("beans-dao.xml");
-
-//  @Autowired
-//  protected SessionFactory sessionFactory;
-
-  @Test
-  public void getManualSessionTest(){
-    log.info("testing getManualSessionTest...");
-    SessionFactory sessionFactory = (SessionFactory) context.getBean("sessionFactory");
-    Session session = sessionFactory.getCurrentSession();
-    log.info("session="+session);
-  }
+  @Autowired
+  protected SessionFactory sessionFactory;
+  @Autowired
+  protected IBaseDAO baseDAO;
 
   @Test
   public void getSession() throws Exception {
-
+    Session testSession = sessionFactory.getCurrentSession();
+    log.info("testSession=" + testSession);
+    Session expectedSession = baseDAO.getSession();
+    log.info("expectedSession=" + expectedSession);
+    assertEquals("Sessions mismatch!", testSession, expectedSession);
   }
 
-  @Test
-  public void saveOrUpdate() throws Exception {
-
-  }
-
-  @Test
-  public void delete() throws Exception {
-
-  }
-
-  @Test
-  public void get() throws Exception {
-
-  }
-
-  @Test
-  public void getPersistentClass() throws Exception {
-
-  }
 }

@@ -1,9 +1,9 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoservices.IStudentService;
+import by.pvt.aliushkevich.daoServices.IStudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
-import by.pvt.aliushkevich.pojos.ClientVO;
+import by.pvt.aliushkevich.valueObjects.ClientVO;
 import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class StudentController {
     if (student.getFirstName() != "" && student.getLastName() != "" && student.getLogin() != "" && student.getPassword() != "") {
       try {
         studentService.addClient(student);
-      } catch (DaoException e) {
+      } catch (Exception e) {
         log.info("Incorrect input: Try to input another data");
         modelMap.addAttribute("errorMessage", "Incorrect input: Try to input another data");
         page = "fail";

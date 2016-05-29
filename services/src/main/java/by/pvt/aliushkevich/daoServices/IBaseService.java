@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoservices;
+package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
 

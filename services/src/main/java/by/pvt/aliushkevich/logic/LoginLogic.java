@@ -1,7 +1,7 @@
 package by.pvt.aliushkevich.logic;
 
-import by.pvt.aliushkevich.daoservices.ILecturerService;
-import by.pvt.aliushkevich.daoservices.IStudentService;
+import by.pvt.aliushkevich.daoServices.ILecturerService;
+import by.pvt.aliushkevich.daoServices.IStudentService;
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Student;
 import org.apache.log4j.Logger;

@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoservices;
+package by.pvt.aliushkevich.daoServices;
 
 import by.pvt.aliushkevich.dao.ILecturerDAO;
 import by.pvt.aliushkevich.dao.IRelationDAO;
