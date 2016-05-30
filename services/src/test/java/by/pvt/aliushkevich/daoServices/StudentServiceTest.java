@@ -8,13 +8,13 @@ import by.pvt.aliushkevich.pojos.Relation;
 import by.pvt.aliushkevich.pojos.Student;
 import by.pvt.aliushkevich.valueObjects.ClientVO;
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = HibernateConfiguration.class)
-@TransactionConfiguration(defaultRollback = true)
+//@TransactionConfiguration(defaultRollback = true)
 @Transactional
 public class StudentServiceTest {
   private static Logger log = Logger.getLogger(StudentServiceTest.class);
@@ -83,9 +83,10 @@ public class StudentServiceTest {
     log.info("getStudents: SUCCESS\n" + expectedStudents);
   }
 
-  //  No need any more because of: @TransactionConfiguration(defaultRollback = true)
-//  @After
-//  public void tearDown() throws Exception {
-//
-//  }
+
+  @After
+  public void tearDown() throws Exception {
+    studentService.deleteClient(testStudent);
+    lecturerService.deleteClient(testLecturer);
+  }
 }
