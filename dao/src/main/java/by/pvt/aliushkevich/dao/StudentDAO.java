@@ -15,12 +15,18 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Rabotnik on 20.04.2016.
+ * @see by.pvt.aliushkevich.dao.IStudentDAO
  */
 @Repository("studentDAO")
 public class StudentDAO extends BaseDAO<Student> implements IStudentDAO{
   private static Logger log = Logger.getLogger(StudentDAO.class);
 
+  /**
+   * Gets Student entity from persistent context by its login
+   * @param login of Student entity
+   * @return Lecturer entity
+   * @throws DaoException
+   */
   public Student getStudentByLogin(String login) throws DaoException {
     Student student;
     log.info("Trying getStudentByLogin " + login + "...");
@@ -38,6 +44,11 @@ public class StudentDAO extends BaseDAO<Student> implements IStudentDAO{
     return student;
   }
 
+  /**
+   * Gets List of Student entities
+   * @return List
+   * @see Student
+   */
   public List<Student> getStudents() {
     List<Student> students = null;
     log.info("Trying getStudents...");
@@ -53,6 +64,13 @@ public class StudentDAO extends BaseDAO<Student> implements IStudentDAO{
     return students;
   }
 
+  /**
+   * Get Student entities, that are signed to this Lecturer's course
+   * @param lecturerLogin
+   * @return Set of Student entities
+   * @see Lecturer
+   * @see Student
+   */
   public Set<Student> getLecturerStudents(String lecturerLogin) {
     log.info("trying getLecturerStudents...");
     Set<Student> lecturerStudents = new HashSet<>();

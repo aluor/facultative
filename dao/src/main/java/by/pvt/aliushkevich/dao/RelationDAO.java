@@ -9,13 +9,18 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Rabotnik on 06.05.2016.
+ * @see by.pvt.aliushkevich.dao.IRelationDAO
  */
 @Repository("relationDAO")
 public class RelationDAO extends BaseDAO<Relation> implements IRelationDAO{
 
   private static Logger log = Logger.getLogger(RelationDAO.class);
 
+  /**
+   * Gets Relation id by Student id and Lecturer id
+   * @return int
+   * @throws DaoException
+   */
   public int getRelationId(int studentId, int lecturerId) throws DaoException {
     log.info("Trying getRelation...");
     Integer relationId;
@@ -32,6 +37,11 @@ public class RelationDAO extends BaseDAO<Relation> implements IRelationDAO{
     return relationId;
   }
 
+  /**
+   * Gets mark that Lecturer gave to Student
+   * @return int mark
+   * @throws DaoException
+   */
   public int getMark(int studentId, int lecturerId) throws DaoException {
     log.info("Trying getMark...");
     Integer mark;
@@ -48,6 +58,11 @@ public class RelationDAO extends BaseDAO<Relation> implements IRelationDAO{
     return mark;
   }
 
+  /**
+   * Gets feedback that Lecturer gave to Student
+   * @return String feedback
+   * @throws DaoException
+   */
   public String getFeedback(int studentId, int lecturerId) throws DaoException {
     log.info("Trying getFeedback...");
     String feedback;

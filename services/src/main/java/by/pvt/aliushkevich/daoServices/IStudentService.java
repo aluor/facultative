@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.valueObjects.ClientVO;
@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Rabotnik on 28.05.2016.
+ * Created by Igor Aliushkevich 05/2016
+ * Provides services that uses StudentDAO in its turn
+ * @see by.pvt.aliushkevich.dao.IStudentDAO
  */
 public interface IStudentService extends IBaseService<Student>{
 

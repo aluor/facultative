@@ -27,8 +27,6 @@ public class ServletSecurityFilter implements Filter {
       session.setAttribute("userType", type);
     }
     chain.doFilter(request, response);
-//    BaseDAO.util.closeSession();
-//    log.info("Hibernate session closed!");
   }
 
   public void destroy() {

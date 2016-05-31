@@ -1,6 +1,6 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoServices.IStudentService;
+import by.pvt.aliushkevich.daoservices.IStudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.valueObjects.ClientVO;

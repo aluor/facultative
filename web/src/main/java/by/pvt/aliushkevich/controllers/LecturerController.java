@@ -1,6 +1,6 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoServices.ILecturerService;
+import by.pvt.aliushkevich.daoservices.ILecturerService;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.valueObjects.ClientVO;
 import org.apache.log4j.Logger;

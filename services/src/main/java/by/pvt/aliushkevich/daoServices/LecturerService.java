@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.dao.ILecturerDAO;
 import by.pvt.aliushkevich.dao.IRelationDAO;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Rabotnik on 10.04.2016.
+ * @see by.pvt.aliushkevich.daoservices.ILecturerService
  */
 @Service("lecturerService")
 @Transactional
@@ -26,6 +26,14 @@ public class LecturerService extends BaseService<Lecturer> implements ILecturerS
   @Autowired
   private IRelationDAO relationDAO;
 
+  /**
+   * Adds mark and feedback to student, having this id and signed up this course
+   * @param mark int
+   * @param feedback String
+   * @param studentId int
+   * @param courseId int
+   * @throws DaoException
+   */
   public void addMarkFeedback(int mark, String feedback, int studentId, int courseId) throws DaoException {
     log.info("Trying addMarkFeedback to student...");
     try {
@@ -42,11 +50,21 @@ public class LecturerService extends BaseService<Lecturer> implements ILecturerS
     }
   }
 
+  /**
+   * Gets List of Lecturer entities using LecturerDAO
+   * @return List
+   * @see by.pvt.aliushkevich.dao.ILecturerDAO
+   */
   public List<Lecturer> getLecturers() {
     log.info("Trying getLecturers...");
     return lecturerDAO.getLecturers();
   }
 
+  /**
+   * Gets course id of Lecturer entities by his login using LecturerDAO
+   * @return int course id
+   * @see by.pvt.aliushkevich.dao.ILecturerDAO
+   */
   public int getCourseIdByLogin(String login) throws DaoException {
     log.info("Trying getCourseIdByLogin...");
     return lecturerDAO.getCourseIdByLogin(login);

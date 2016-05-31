@@ -1,7 +1,8 @@
 package by.pvt.aliushkevich.logic;
 
 /**
- * Created by Rabotnik on 28.05.2016.
+ * Created by Igor Aliushkevich 05/2016
+ * Provides check client login logic
  */
 public interface ILoginLogic {
 

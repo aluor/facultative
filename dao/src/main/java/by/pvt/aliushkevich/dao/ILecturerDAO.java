@@ -6,7 +6,9 @@ import by.pvt.aliushkevich.pojos.Lecturer;
 import java.util.List;
 
 /**
- * Created by Rabotnik on 28.05.2016.
+ * Created by Igor Aliushkevich 05/2016
+ * Provides specific data manipulation operations with Lecturer entity
+ *@see Lecturer
  */
 public interface ILecturerDAO extends IBaseDAO<Lecturer>{
   Lecturer getLecturerByLogin(String login) throws DaoException;

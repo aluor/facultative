@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoServices.initialialization;
+package by.pvt.aliushkevich.daoservices.initialialization;
 
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Relation;

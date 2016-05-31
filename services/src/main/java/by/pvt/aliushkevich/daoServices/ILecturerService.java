@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Lecturer;
@@ -6,7 +6,9 @@ import by.pvt.aliushkevich.pojos.Lecturer;
 import java.util.List;
 
 /**
- * Created by Rabotnik on 28.05.2016.
+ * Created by Igor Aliushkevich 05/2016
+ * Provides services that uses LecturerDAO in its turn
+ * @see by.pvt.aliushkevich.dao.ILecturerDAO
  */
 public interface ILecturerService extends IBaseService<Lecturer> {
 

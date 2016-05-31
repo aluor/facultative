@@ -1,6 +1,6 @@
 package by.pvt.aliushkevich.controllers;
 
-import by.pvt.aliushkevich.daoServices.IStudentService;
+import by.pvt.aliushkevich.daoservices.IStudentService;
 import by.pvt.aliushkevich.enums.ClientType;
 import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.logic.ILoginLogic;
@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Handles the very first request and requests of user authentication
+ */
 @Controller
 public class MainController {
   static Logger log = Logger.getLogger(MainController.class);
@@ -25,7 +28,9 @@ public class MainController {
 
   @Autowired
   private ILoginLogic loginLogic;
-
+  /**
+   * Handles the very first request
+   */
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String mainPage(ModelMap modelMap) {
     page = "login";
@@ -36,6 +41,10 @@ public class MainController {
     return page;
   }
 
+  /**
+   * Handles checkLogin request
+   * @see ILoginLogic
+   */
   @RequestMapping(value = "/checkLogin", method = RequestMethod.POST)
   public String checkLogin(ModelMap modelMap, @ModelAttribute ClientVO client, HttpSession httpSession) {
     log.info("MainController checkLogin used...");
@@ -68,7 +77,9 @@ public class MainController {
     return page;
   }
 
-
+  /**
+   * Handles logout request
+   */
   @RequestMapping(value = "/logout", method = RequestMethod.GET)
   public String logout(ModelMap modelMap, HttpSession httpSession) {
     page = "login";
@@ -81,5 +92,4 @@ public class MainController {
     return page;
   }
 
-  //TODO: нужно ли будет где-то закрывать сессию или она 1 на транзакцию в нашем случае?
 }

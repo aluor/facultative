@@ -10,11 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @see by.pvt.aliushkevich.dao.ILecturerDAO
+ */
 @Repository("lecturerDAO")
 public class LecturerDAO extends BaseDAO<Lecturer> implements ILecturerDAO{
 
   private static Logger log = Logger.getLogger(LecturerDAO.class);
 
+  /**
+   * Gets Lecturer entity from persistent context by its login
+   * @param login of Lecturer entity
+   * @return Lecturer entity
+   * @throws DaoException
+   */
   public Lecturer getLecturerByLogin(String login) throws DaoException {
     Lecturer lecturer;
     log.info("Trying getLecturerByLogin "+login+"...");
@@ -32,6 +41,12 @@ public class LecturerDAO extends BaseDAO<Lecturer> implements ILecturerDAO{
     return lecturer;
   }
 
+  /**
+   * Gets  id of teaching by certain lecturer course
+   * @param login of Lecturer entity
+   * @return int course id
+   * @throws DaoException
+   */
   public int getCourseIdByLogin(String login) throws DaoException {
     log.info("Trying getCourseIdByLogin "+login+":...");
     Integer courseId;
@@ -48,6 +63,12 @@ public class LecturerDAO extends BaseDAO<Lecturer> implements ILecturerDAO{
     return courseId;
   }
 
+  /**
+   * Gets  Lecturer entity by his teaching course
+   * @param courseId int
+   * @return Lecturer
+   * @throws DaoException
+   */
   public Lecturer getLecturerByCourseId(int courseId) throws DaoException {
     Lecturer lecturer = null;
     log.info("trying getLecturerByCourseId:" + courseId + "...");
@@ -67,6 +88,11 @@ public class LecturerDAO extends BaseDAO<Lecturer> implements ILecturerDAO{
     return lecturer;
   }
 
+  /**
+   * Get List of Lecturer entities
+   * @return List
+   * @see Lecturer
+   */
   public List<Lecturer> getLecturers() {
     List<Lecturer> lecturers = null;
     log.info("Trying getLecturers...");

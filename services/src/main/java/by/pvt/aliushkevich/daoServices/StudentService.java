@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.dao.ILecturerDAO;
 import by.pvt.aliushkevich.dao.IRelationDAO;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Rabotnik on 10.04.2016.
+ * @see by.pvt.aliushkevich.daoservices.IStudentService
  */
 @Service("studentService")
 @Transactional
@@ -33,6 +33,13 @@ public class StudentService extends BaseService<Student> implements IStudentServ
   @Autowired
   private IRelationDAO relationDAO;
 
+  /**
+   * Adds learning course to student by his login using StudentDAO
+   * @param login student's login (String)
+   * @param courseId student's signed up course id (int)
+   * @throws DaoException
+   * @see by.pvt.aliushkevich.dao.IStudentDAO
+   */
   public void addLearningCourse(String login, int courseId) throws DaoException {
     log.info("Trying addLearningCourse...");
     try {
@@ -64,6 +71,13 @@ public class StudentService extends BaseService<Student> implements IStudentServ
     }
   }
 
+  /**
+   * Get Student value objects, that are signed to this Lecturer using StudentDAO
+   * @param lecturerLogin
+   * @return Set of value student objects
+   * @throws DaoException
+   * @see by.pvt.aliushkevich.valueObjects.ClientVO
+   */
   public Set<ClientVO> getLecturerValueStudents(String lecturerLogin) throws DaoException {
     log.info("Trying getLecturerValueStudents...");
     Set<ClientVO> clientVOs = new HashSet<>();
@@ -81,7 +95,11 @@ public class StudentService extends BaseService<Student> implements IStudentServ
     }
     return clientVOs;
   }
-
+  /**
+   * Gets List of Student entities using StudentDAO
+   * @return List
+   * @see by.pvt.aliushkevich.dao.IStudentDAO
+   */
   public List<Student> getStudents() {
     log.info("Trying getStudents...");
     return studentDAO.getStudents();

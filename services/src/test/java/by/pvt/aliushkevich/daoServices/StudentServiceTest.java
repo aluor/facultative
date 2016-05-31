@@ -1,8 +1,8 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.configuration.HibernateConfiguration;
 import by.pvt.aliushkevich.dao.IStudentDAO;
-import by.pvt.aliushkevich.daoServices.initialialization.InitEntity;
+import by.pvt.aliushkevich.daoservices.initialialization.InitEntity;
 import by.pvt.aliushkevich.pojos.Lecturer;
 import by.pvt.aliushkevich.pojos.Relation;
 import by.pvt.aliushkevich.pojos.Student;

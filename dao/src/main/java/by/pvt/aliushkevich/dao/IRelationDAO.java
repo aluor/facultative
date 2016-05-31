@@ -4,7 +4,9 @@ import by.pvt.aliushkevich.exceptions.DaoException;
 import by.pvt.aliushkevich.pojos.Relation;
 
 /**
- * Created by Rabotnik on 28.05.2016.
+ * Created by Igor Aliushkevich 05/2016
+ * Provides specific data manipulation operations with Relation entity (between Lecturer and Student entities)
+ *@see Relation
  */
 public interface IRelationDAO extends IBaseDAO<Relation> {
 

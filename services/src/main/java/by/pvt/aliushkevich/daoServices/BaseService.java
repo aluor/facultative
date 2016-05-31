@@ -1,4 +1,4 @@
-package by.pvt.aliushkevich.daoServices;
+package by.pvt.aliushkevich.daoservices;
 
 import by.pvt.aliushkevich.dao.IBaseDAO;
 import by.pvt.aliushkevich.exceptions.DaoException;
@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by Rabotnik on 01.05.2016.
+ * @param <T> classes of business entities
+ * @see by.pvt.aliushkevich.daoservices.IBaseService
  */
 @Service("baseService")
 @Transactional
@@ -19,6 +20,10 @@ public class BaseService<T> implements IBaseService<T> {
   @Autowired
   private IBaseDAO baseDAO;
 
+  /**
+   * Adds business entity in persistent hibernate context using DAO
+   * @see by.pvt.aliushkevich.dao.BaseDAO
+   */
   public void addClient(T client) throws DaoException {
     log.info("trying addClient:" + client);
     try {
@@ -30,6 +35,10 @@ public class BaseService<T> implements IBaseService<T> {
     }
   }
 
+  /**
+   * Deletes business entity from persistent hibernate context using DAO
+   * @see by.pvt.aliushkevich.dao.BaseDAO
+   */
   public void deleteClient(T client) throws DaoException {
     log.info("trying deleteClient:" + client);
     try {
