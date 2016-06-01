@@ -1,12 +1,15 @@
 package by.pvt.aliushkevich.pojos;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-//@Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Lecturer implements Serializable {
   private static final long serialVersionUID = 1L;
   private int id;
@@ -83,7 +86,7 @@ public class Lecturer implements Serializable {
     this.courseId = courseId;
   }
 
-  @OneToMany(mappedBy = "lecturer", cascade = CascadeType.ALL, orphanRemoval=true)
+  @OneToMany(mappedBy = "lecturer", cascade = CascadeType.ALL, orphanRemoval = true)
   public Set<Relation> getRelations() {
     return relations;
   }

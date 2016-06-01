@@ -51,7 +51,7 @@
     </dependency>
 
     <!--ehcache-->
-   <!-- <dependency>
+    <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache-core</artifactId>
       <version>2.6.9</version>
@@ -60,7 +60,7 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-ehcache</artifactId>
       <version>4.3.6.FINAL</version>
-    </dependency>-->
+    </dependency>
 
     <!-- <dependency>
        <groupId>c3p0</groupId>
@@ -73,6 +73,8 @@
        <artifactId>mchange-commons-java</artifactId>
        <version>0.2.11</version>
      </dependency>-->
+
+
 
     <!--Dbcp-->
     <dependency>
@@ -138,6 +140,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+
+    <!--Spring 2 level cache-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
       <version>${springframework.version}</version>
     </dependency>
 

@@ -97,10 +97,10 @@ public class LecturerDAO extends BaseDAO<Lecturer> implements ILecturerDAO{
     List<Lecturer> lecturers = null;
     log.info("Trying getLecturers...");
     try {
-
       Session session = getSession();
       String hql = "FROM Lecturer";
       Query query = session.createQuery(hql);
+      query.setCacheable(true);
       lecturers = query.list();
       log.info("\n----------\n" + lecturers + "\n----------\n");
     } catch (HibernateException e) {

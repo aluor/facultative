@@ -73,6 +73,8 @@ public class BaseDAO<T> implements IBaseDAO<T> {
     }
     return client;
   }
+
+
   /**
    * Utility method for method T get(Serializable id)
    */

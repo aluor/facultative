@@ -56,6 +56,7 @@ public class StudentDAO extends BaseDAO<Student> implements IStudentDAO{
       Session session = getSession();
       String hql = "FROM Student";
       Query query = session.createQuery(hql);
+      query.setCacheable(true);
       students = query.list();
       log.info("\n----------\n" + students + "\n----------\n");
     } catch (HibernateException e) {
