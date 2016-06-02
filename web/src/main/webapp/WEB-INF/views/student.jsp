@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="s" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <html>
 
 <head>
@@ -8,28 +9,19 @@
 </head>
 
 <body>
-	<h3>Welcome, Student!</h3>
-	<hr />${client.login}, hello!<br />
-	<b>Choose a course, you'd like to learn </b><br />
-
- <%-- <form name="chooseCourseForm" method="POST" action="controller">
-    <input type="hidden" name="command" value="chooseLearningCourse" />
-    <p><b>Your choice:</b></p>
-    <p><input name="choice" type="radio" value="1" checked="checked"> Mathematics</p>
-    <p><input name="choice" type="radio" value="2"> Physics</p>
-    <p><input name="choice" type="radio" value="3"> English</p>
-    <p><input type="submit" value="I understand, what I'm doing"></p>
-  </form>--%>
+	<h3><spring:message code="sWelcome"/></h3>
+	<hr />${client.login}, <spring:message code="hello"/><br />
+	<b><spring:message code="sLine01"/> </b><br />
 
 	 <s:form method="post" modelAttribute="client" action="chooseLearningCourse">
-   <p><b>Your choice:</b></p>
-    <p><s:radiobutton path="choice" value="1" checked="checked"/> Mathematics</p>
-    <p><s:radiobutton path="choice" value="2"/> Physics</p>
-    <p><s:radiobutton path="choice" value="3"/> English</p>
-    <p><input type="submit" value="I understand, what I'm doing"></p>
+   <p><b><spring:message code="choice"/></b></p>
+    <p><s:radiobutton path="choice" value="1" checked="checked"/> <spring:message code="mathematics"/></p>
+    <p><s:radiobutton path="choice" value="2"/> <spring:message code="physics"/></p>
+    <p><s:radiobutton path="choice" value="3"/> <spring:message code="english"/></p>
+    <p><input type="submit" value="OK"></p>
     </s:form>
   
-  <button onclick="goBack()">Go Back</button> <br />
+  <button onclick="goBack()"><spring:message code="goBack"/></button> <br />
 <script>
 function goBack() {
     window.history.back();
@@ -37,7 +29,7 @@ function goBack() {
 </script>
 	
 	<br /> Debug info - session = ${sessionScope}
-  <a href="logout">Logout</a>
+  <a href="logout"><spring:message code="logout"/></a>
 </body>
 
 </html>
