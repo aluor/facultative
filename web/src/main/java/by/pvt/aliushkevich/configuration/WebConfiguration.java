@@ -6,15 +6,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesView;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import java.util.Locale;
 
@@ -23,7 +23,7 @@ import java.util.Locale;
 @ComponentScan(basePackages = "by.pvt")
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-  @Bean(name = "viewResolver")
+  /*@Bean(name = "viewResolver")
   public ViewResolver viewResolver() {
     InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
     viewResolver.setViewClass(JstlView.class);
@@ -31,6 +31,30 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     viewResolver.setSuffix(".jsp");
 
     return viewResolver;
+  }*/
+
+  /**
+   * Resolves views selected for rendering by @Controllers to tiles resources in the Apache TilesConfigurer bean
+   */
+  @Bean
+  public TilesViewResolver getTilesViewResolver() {
+    TilesViewResolver tilesViewResolver = new TilesViewResolver();
+    tilesViewResolver.setViewClass(TilesView.class);
+    return tilesViewResolver;
+  }
+
+  /**
+   * Configures Apache tiles definitions bean used by Apache TilesViewResolver to resolve views selected for rendering by @Controllers
+   */
+  @Bean
+  public TilesConfigurer getTilesConfigurer() {
+    TilesConfigurer tilesConfigurer = new TilesConfigurer();
+    tilesConfigurer.setCheckRefresh(true);
+    tilesConfigurer.setDefinitionsFactoryClass(TilesDefinitionsConfig.class);
+
+    // Add apache tiles definitions
+    TilesDefinitionsConfig.addDefinitions();
+    return tilesConfigurer;
   }
 
   @Bean
